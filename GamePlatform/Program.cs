@@ -1,6 +1,6 @@
 ﻿
-Console.WriteLine("Enter your username:\n");
-string playerName = Console.ReadLine();
+Console.WriteLine("Enter your username:\n"); 
+string playerName = Console.ReadLine(); //Implementera UI
 
 while (true)
 {
@@ -107,6 +107,15 @@ static void showTopList() // vill skriva ut player name, nr of game, average gue
     }
     input.Close();
 }
+
+interface IUI
+{
+    public string GetInput();
+
+    public void DisplayOutput();
+}
+
+
 
 
 class PlayerData
