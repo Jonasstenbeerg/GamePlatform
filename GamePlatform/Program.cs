@@ -1,9 +1,8 @@
 ﻿
-bool playOn = true;
 Console.WriteLine("Enter your username:\n");
-string name = Console.ReadLine();
+string playerName = Console.ReadLine();
 
-while (playOn)
+while (true)
 {
     string goal = makeGoal();
 
@@ -24,14 +23,14 @@ while (playOn)
         Console.WriteLine(bbcc + "\n");
     }
     StreamWriter output = new StreamWriter("result.txt", append: true);
-    output.WriteLine(name + "#&#" + nGuess);
+    output.WriteLine(playerName + "#&#" + nGuess);
     output.Close();
     showTopList();
     Console.WriteLine("Correct, it took " + nGuess + " guesses\nContinue?");
     string answer = Console.ReadLine();
     if (answer != null && answer != "" && answer.Substring(0, 1) == "n")
     {
-        playOn = false;
+        Environment.Exit(0);
     }
 }
 
