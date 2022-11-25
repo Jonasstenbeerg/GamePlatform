@@ -1,57 +1,61 @@
-﻿
-bool playOn = true;
-Console.WriteLine("Enter your username:\n");
-string name = Console.ReadLine();
+﻿IUI ui = new ConsoleIO();
 
-while (playOn)
+ui.PrintString("Enter your username:\n");
+string playerName = ui.GetString();
+
+while (true)
 {
-    string goal = makeGoal();
+    string digitsToGuess = GetDigits();
 
-    Console.WriteLine("New game:\n");
+    ui.PrintString("New game:\n");
     //comment out or remove next line to play real games!
-    Console.WriteLine("For practice, number is: " + goal + "\n");
-    string guess = Console.ReadLine();
+    ui.PrintString($"For practice, number is:   {digitsToGuess}  \n");
+    string guess = ui.GetString();
 
     int nGuess = 1;
-    string bbcc = checkBC(goal, guess);
-    Console.WriteLine(bbcc + "\n");
+    string bbcc = checkBC(digitsToGuess, guess);
+    ui.PrintString($"{bbcc}  \n");
     while (bbcc != "BBBB,")
     {
         nGuess++;
-        guess = Console.ReadLine();
-        Console.WriteLine(guess + "\n");
-        bbcc = checkBC(goal, guess);
-        Console.WriteLine(bbcc + "\n");
+        guess = ui.GetString();
+        ui.PrintString(guess + "\n");
+        bbcc = checkBC(digitsToGuess, guess);
+        ui.PrintString(bbcc + "\n");
     }
-    StreamWriter output = new StreamWriter("result.txt", append: true);
-    output.WriteLine(name + "#&#" + nGuess);
-    output.Close();
-    showTopList();
-    Console.WriteLine("Correct, it took " + nGuess + " guesses\nContinue?");
-    string answer = Console.ReadLine();
-    if (answer != null && answer != "" && answer.Substring(0, 1) == "n")
+
+    using (StreamWriter writer = new("scoreboard.txt", append: true))
     {
-        playOn = false;
+        writer.WriteLine(playerName + "#&#" + nGuess);
+    }
+
+    showTopList();
+    ui.PrintString($"Correct, it took   {nGuess}   guesses\nContinue?");
+    string answer = ui.GetString();
+    if (answer[0] == 'n')
+    {
+        ui.Exit();
     }
 }
 
-static string makeGoal()
+static string GetDigits() //Fråga sebastian om GetDigitsToGuess blir för långt? En eller två metoder?
 {
-    Random randomGenerator = new Random();
-    string goal = "";
+    Random randomGenerator = new();
+    string digits = "";
     for (int i = 0; i < 4; i++)
     {
         int random = randomGenerator.Next(10);
-        string randomDigit = "" + random;
-        while (goal.Contains(randomDigit))              //Slumpar fram 4 unika siffror mellan 0 och 9
+        while (digits.Contains(random.ToString()))    //Slumpar fram 4 unika siffror mellan 0 och 9
         {
-            random = randomGenerator.Next(10);
-            randomDigit = "" + random;
+            random = randomGenerator.Next(10);        //Skapa en ytterligare funktion som adderar random unique number?
+                                                      //Private används bara till Moo, ingår inte i Interface
         }
-        goal = goal + randomDigit;
+        digits += random;
     }
-    return goal;
+    return digits;
 }
+
+
 
 static string checkBC(string goal, string guess)
 {
@@ -80,10 +84,10 @@ static string checkBC(string goal, string guess)
 
 static void showTopList() // vill skriva ut player name, nr of game, average guesses
 {
-    StreamReader input = new StreamReader("result.txt");
+    StreamReader reader = new("scoreboard.txt");
     List<PlayerData> results = new List<PlayerData>();
     string line;
-    while ((line = input.ReadLine()) != null)
+    while ((line = reader.ReadLine()) != null)
     {
         string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None); // Förenkla split genom bara Split("#&#")
         string name = nameAndScore[0];
@@ -106,9 +110,44 @@ static void showTopList() // vill skriva ut player name, nr of game, average gue
     {
         Console.WriteLine(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.NGames, p.Average()));
     }
-    input.Close();
+    reader.Close();
 }
 
+interface IUI
+{
+    public string GetString();
+    public void PrintString(string input);
+    void Exit();
+    void Clear();
+}
+
+class ConsoleIO : IUI
+{
+    public void Clear()
+    {
+        throw new NotImplementedException();
+    }
+    public void Exit()
+    {
+        Environment.Exit(0);
+    }
+    public string GetString()
+    {
+        string? input;
+
+        do
+        {
+            input = Console.ReadLine();
+
+        } while (string.IsNullOrEmpty(input));
+        return input!;
+    }
+
+    public void PrintString(string input)
+    {
+        Console.WriteLine(input);
+    }
+}
 
 class PlayerData
 {
