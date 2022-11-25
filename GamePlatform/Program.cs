@@ -1,6 +1,8 @@
 ﻿IUI ui = new ConsoleIO();
 
-ui.PrintString("Enter your username:\n");
+
+
+ui.PrintString("Enter your username: ");
 string playerName = ui.GetString();
 
 while (true)
@@ -9,7 +11,7 @@ while (true)
 
     ui.PrintString("New game:\n");
     //comment out or remove next line to play real games!
-    ui.PrintString($"For practice, number is:   {digitsToGuess}  \n");
+    ui.PrintString($"For practice, number is: {digitsToGuess}\n");
     string guess = ui.GetString();
 
     int nGuess = 1;
@@ -29,8 +31,8 @@ while (true)
         writer.WriteLine(playerName + "#&#" + nGuess);
     }
 
-    showTopList();
-    ui.PrintString($"Correct, it took   {nGuess}   guesses\nContinue?");
+    PrintScoreboard(ui);
+    ui.PrintString($"\nCorrect, it took {nGuess} guesses\nContinue?");
     string answer = ui.GetString();
     if (answer[0] == 'n')
     {
@@ -82,35 +84,42 @@ static string checkBC(string goal, string guess)
     return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
 }
 
-static void showTopList() // vill skriva ut player name, nr of game, average guesses
+static void PrintScoreboard(IUI ui) // vill skriva ut player name, nr of game, average guesses
 {
-    StreamReader reader = new("scoreboard.txt");
-    List<PlayerData> results = new List<PlayerData>();
-    string line;
-    while ((line = reader.ReadLine()) != null)
+    var scoreboard = GenerateScoreboard();
+    ui.PrintString("Player   games average");
+
+    foreach (PlayerData player in scoreboard)
     {
-        string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None); // Förenkla split genom bara Split("#&#")
-        string name = nameAndScore[0];
-        int guesses = Convert.ToInt32(nameAndScore[1]);
-        PlayerData pd = new PlayerData(name, guesses);
-        int pos = results.IndexOf(pd);
-        if (pos < 0)
+        ui.PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.NumberOfGames, player.Average()));
+    }
+}
+
+static List<PlayerData> GenerateScoreboard()
+{
+    List<PlayerData> scoreboard = new();
+    using (StreamReader reader = new("scoreboard.txt"))
+    {
+        while (!reader.EndOfStream)
         {
-            results.Add(pd);                                            //Sorterar scoreboard på lägst average
-                                                                        //guess och skriver ut den
-        }
-        else
-        {
-            results[pos].Update(guesses);
+            string[] nameAndScore = reader.ReadLine()!.Split("#&#");
+            string name = nameAndScore[0];
+            int guesses = Convert.ToInt32(nameAndScore[1]);
+
+            PlayerData playerToAdd = new(name, guesses);
+
+            if (scoreboard.Any(player => player.Name == playerToAdd.Name))
+            {                                                                                                 //Sorterar scoreboard på lägst average
+                scoreboard.Find(player => player.Name == playerToAdd.Name)!.Update(guesses);                  //guess och skriver ut den
+            }
+            else
+            {
+                scoreboard.Add(playerToAdd);
+            }
         }
     }
-    results.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
-    Console.WriteLine("Player   games average");
-    foreach (PlayerData p in results)
-    {
-        Console.WriteLine(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.NGames, p.Average()));
-    }
-    reader.Close();
+    scoreboard.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
+    return scoreboard;
 }
 
 interface IUI
@@ -152,34 +161,24 @@ class ConsoleIO : IUI
 class PlayerData
 {
     public string Name { get; private set; }
-    public int NGames { get; private set; }
+    public int NumberOfGames { get; private set; }
     int totalGuess;
 
     public PlayerData(string name, int guesses)
     {
         this.Name = name;
-        NGames = 1;
+        NumberOfGames = 1;
         totalGuess = guesses;
     }
 
     public void Update(int guesses)
     {
         totalGuess += guesses;
-        NGames++;
+        NumberOfGames++;
     }
 
     public double Average()
     {
-        return (double)totalGuess / NGames;
-    }
-
-    public override bool Equals(Object p)
-    {
-        return Name.Equals(((PlayerData)p).Name);
-    }
-
-    public override int GetHashCode()
-    {
-        return Name.GetHashCode();
+        return (double)totalGuess / NumberOfGames;
     }
 }
