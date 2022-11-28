@@ -1,8 +1,8 @@
 ﻿IUI ui = new ConsoleIO();
 
-IDigitGuessGame guessGame = new MooGame();
+//IDigitGuessGame guessGame = new MooGame();
 
-guessGame.ExecuteGame(ui);
+//guessGame.ExecuteGame(ui);
 
 
 ui.PrintString("Enter your username: ");
@@ -155,20 +155,57 @@ class ConsoleIO : IUI
     }
 }
 
-public class MooGame : IDigitGuessGame
+public class MooGame
 {
     
 
-    public void ExecuteGame(IUI ui)
+   
+}
+
+public class Gamecontroller
+{
+    private readonly IUI _ui;
+    private readonly IDigitGuessGame _digitGuessGame;
+    public Gamecontroller(IUI ui, IDigitGuessGame digitGuessGame)
     {
-        
+        _ui = ui;
+        _digitGuessGame = digitGuessGame;
+    }
+
+    public void RunGame()
+    {
+        _digitGuessGame.RegisterPlayer(_ui);
+        do
+        {
+            string stringToGuess = _digitGuessGame.GetStringToGuess();
+
+            while (stringToGuess != _digitGuessGame.MakeGuess(_ui))
+            {
+                _digitGuessGame.PrintLastGuessResult(_ui);
+            }
+
+            _digitGuessGame.PrintScoreboard(_ui);
+
+        } while (_digitGuessGame.WantsToContinue(_ui));
     }
 }
 
 public interface IDigitGuessGame
 {
 
-    public void ExecuteGame(IUI ui);
+    public void RegisterPlayer(IUI ui);
+
+    public string GetStringToGuess();
+
+    public string MakeGuess(IUI ui);
+
+    public void PrintLastGuessResult(IUI ui);
+
+    public void PrintScoreboard(IUI ui);
+
+    public bool WantsToContinue(IUI uI);
+
+
 }
 
 class PlayerData
