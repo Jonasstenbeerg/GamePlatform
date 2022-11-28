@@ -1,127 +1,11 @@
 ﻿IUI ui = new ConsoleIO();
 
-//IDigitGuessGame guessGame = new MooGame();
+IDigitGuessGame guessGame = new MooGame();
 
-//guessGame.ExecuteGame(ui);
+Gamecontroller controller = new Gamecontroller(ui, guessGame);
 
+controller.RunGame();
 
-ui.PrintString("Enter your username: ");
-string playerName = ui.GetString();
-
-while (true)
-{
-    string digitsToGuess = GetDigits();
-
-    ui.PrintString("New game:\n");
-    //comment out or remove next line to play real games!
-    ui.PrintString($"For practice, number is: {digitsToGuess}\n");
-    string guess = ui.GetString();
-
-    int guessCounter = 1;
-    string guessResult = GetGuessResult(digitsToGuess, guess);
-    ui.PrintString($"{guessResult}  \n");
-    while (guess != digitsToGuess)
-    {
-        guessCounter++;
-        guess = ui.GetString();
-        ui.PrintString(guess + "\n");
-        guessResult = GetGuessResult(digitsToGuess, guess);
-        ui.PrintString(guessResult + "\n");
-    }
-
-    using (StreamWriter writer = new("scoreboard.txt", append: true))
-    {
-        writer.WriteLine(playerName + "#&#" + guessCounter);
-    }
-
-    PrintScoreboard(ui);
-    ui.PrintString($"\nCorrect, it took {guessCounter} guesses\nContinue?");
-    string answer = ui.GetString();
-    if (answer[0] == 'n')
-    {
-        ui.Exit();
-    }
-}
-
-static string GetDigits() //Fråga sebastian om GetDigitsToGuess blir för långt? En eller två metoder?
-{
-    Random randomGenerator = new();
-    string digits = "";
-    for (int i = 0; i < 4; i++)
-    {
-        int random = randomGenerator.Next(10);
-        while (digits.Contains(random.ToString()))    //Slumpar fram 4 unika siffror mellan 0 och 9
-        {
-            random = randomGenerator.Next(10);        //Skapa en ytterligare funktion som adderar random unique number?
-                                                      //Private används bara till Moo, ingår inte i Interface
-        }
-        digits += random;
-    }
-    return digits;
-}
-
-static string GetGuessResult(string digitsToGuess, string guess)
-{
-    int cows = 0; 
-    int bulls = 0;
-    guess += "    ";     // if player entered less than 4 chars
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            if (digitsToGuess[i] == guess[j])
-            {
-                if (i == j)
-                {
-                    bulls++;                // Jämför goal och guess och hittar rätt
-                }                           // gissningar baserat på indexplats och innehåll
-                                            // adderar cow för rätt siffra fel index
-                else                        // adderar bulls för rätt siffra rätt index
-                {                           // returnerar antal bulls och cows i en sträng
-                    cows++;
-                }
-            }
-        }
-    }
-    return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
-}
-
-static void PrintScoreboard(IUI ui) // vill skriva ut player name, nr of game, average guesses
-{
-    var scoreboard = GenerateScoreboard();
-    ui.PrintString("Player   games average");
-
-    foreach (PlayerData player in scoreboard)
-    {
-        ui.PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.NumberOfGames, player.GetAverageGuesses()));
-    }
-}
-
-static List<PlayerData> GenerateScoreboard()
-{
-    List<PlayerData> scoreboard = new();
-    using (StreamReader reader = new("scoreboard.txt"))
-    {
-        while (!reader.EndOfStream)
-        {
-            string[] nameAndScore = reader.ReadLine()!.Split("#&#");
-            string name = nameAndScore[0];
-            int guesses = int.Parse(nameAndScore[1]);
-
-            PlayerData playerToAdd = new(name, guesses);
-
-            if (scoreboard.Any(player => player.Name == playerToAdd.Name))
-            {                                                                                                 //Sorterar scoreboard på lägst average
-                scoreboard.Find(player => player.Name == playerToAdd.Name)!.Update(guesses);                  //guess och skriver ut den
-            }
-            else
-            {
-                scoreboard.Add(playerToAdd);
-            }
-        }
-    }
-    return scoreboard.OrderBy(player => player.GetAverageGuesses()).ToList();
-}
 
 public interface IUI
 {
@@ -155,57 +39,186 @@ class ConsoleIO : IUI
     }
 }
 
-public class MooGame
+public class MooGame : IDigitGuessGame
 {
-    
+    private string? _playerName;
+    private int _guessCounter;
+    private string? _digitsToGuess;
+    private string? _currentGuess;
+    public void SetupDigitsToGuess()
+    {
+        Random randomGenerator = new();
+        string digits = "";
+        for (int i = 0; i < 4; i++)
+        {
+            int random = randomGenerator.Next(10);
+            while (digits.Contains(random.ToString()))    //Slumpar fram 4 unika siffror mellan 0 och 9
+            {
+                random = randomGenerator.Next(10);        //Skapa en ytterligare funktion som adderar random unique number?
+                                                          //Private används bara till Moo, ingår inte i Interface
+            }
+            digits += random;
+        }
+        _digitsToGuess= digits;
+    }
 
-   
+    public void MakeGuess(IUI ui)
+    {
+        _guessCounter++;
+        _currentGuess = ui.GetString();
+       if(_guessCounter != 1) ui.PrintString($"{_currentGuess}\n");
+    }
+
+    public void PrintLastGuessResult(IUI ui)
+    {
+        int cows = 0;
+        int bulls = 0;
+        //_currentGuess += "    ";     // if player entered less than 4 chars
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < _currentGuess!.Length; j++)
+            {
+                if (_digitsToGuess![i] == _currentGuess[j])
+                {
+                    if (i == j)
+                    {
+                        bulls++;                // Jämför goal och guess och hittar rätt
+                    }                           // gissningar baserat på indexplats och innehåll
+                                                // adderar cow för rätt siffra fel index
+                    else                        // adderar bulls för rätt siffra rätt index
+                    {                           // returnerar antal bulls och cows i en sträng
+                        cows++;
+                    }
+                }
+            }
+        }
+        ui.PrintString("BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows)+"\n");
+    }
+
+    public void PrintScoreboard(IUI ui)
+    {
+        var scoreboard = GenerateScoreboard();
+        ui.PrintString("Player   games average");
+
+        foreach (PlayerData player in scoreboard)
+        {
+            ui.PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.NumberOfGames, player.GetAverageGuesses()));
+        }
+    }
+    
+    private List<PlayerData> GenerateScoreboard()
+    {
+        List<PlayerData> scoreboard = new();
+        using (StreamReader reader = new("scoreboard.txt"))
+        {
+            while (!reader.EndOfStream)
+            {
+                string[] nameAndScore = reader.ReadLine()!.Split("#&#");
+                string name = nameAndScore[0];
+                int guesses = int.Parse(nameAndScore[1]);
+
+                PlayerData playerToAdd = new(name, guesses);
+
+                if (scoreboard.Any(player => player.Name == playerToAdd.Name))
+                {                                                                                                 //Sorterar scoreboard på lägst average
+                    scoreboard.Find(player => player.Name == playerToAdd.Name)!.Update(guesses);                  //guess och skriver ut den
+                }
+                else
+                {
+                    scoreboard.Add(playerToAdd);
+                }
+            }
+        }
+        return scoreboard.OrderBy(player => player.GetAverageGuesses()).ToList();
+    }
+
+    public void RegisterPlayer(IUI ui)
+    {
+        ui.PrintString("Enter your username: ");
+        _playerName = ui.GetString();
+    }
+
+    public bool WantsToContinue(IUI uI)
+    {
+        uI.PrintString($"\nCorrect, it took {_guessCounter} guesses\nContinue?");
+        return uI.GetString()[0] == 'n' ? false : true; 
+        
+    }
+
+    public bool ISGuessWrong()
+    {
+        return _currentGuess != _digitsToGuess;
+    }
+
+    public void DisplayStringToGuess(IUI uI)
+    {
+        uI.PrintString($"For practice, number is: {_digitsToGuess}\n");
+    }
+
+    public void UpdateScoreboard()
+    {
+        using (StreamWriter writer = new("scoreboard.txt", append: true))
+        {
+            writer.WriteLine(_playerName + "#&#" + _guessCounter);
+        }
+    }
 }
 
 public class Gamecontroller
 {
     private readonly IUI _ui;
-    private readonly IDigitGuessGame _digitGuessGame;
+    private readonly IDigitGuessGame _game;
     public Gamecontroller(IUI ui, IDigitGuessGame digitGuessGame)
     {
         _ui = ui;
-        _digitGuessGame = digitGuessGame;
+        _game = digitGuessGame;
     }
 
     public void RunGame()
     {
-        _digitGuessGame.RegisterPlayer(_ui);
+        _game.RegisterPlayer(_ui);
+
         do
         {
-            string stringToGuess = _digitGuessGame.GetStringToGuess();
+            _game.SetupDigitsToGuess();
+            _ui.PrintString("New game:\n");
+            _game.DisplayStringToGuess(_ui);
 
-            while (stringToGuess != _digitGuessGame.MakeGuess(_ui))
+            do
             {
-                _digitGuessGame.PrintLastGuessResult(_ui);
+                _game.MakeGuess(_ui);
+                _game.PrintLastGuessResult(_ui);
             }
+            while (_game.ISGuessWrong());
+            
+            _game.UpdateScoreboard();
+            _game.PrintScoreboard(_ui);
 
-            _digitGuessGame.PrintScoreboard(_ui);
+        } while (_game.WantsToContinue(_ui));
 
-        } while (_digitGuessGame.WantsToContinue(_ui));
+        _ui.Exit();
     }
 }
 
 public interface IDigitGuessGame
 {
-
     public void RegisterPlayer(IUI ui);
 
-    public string GetStringToGuess();
+    public void SetupDigitsToGuess();
 
-    public string MakeGuess(IUI ui);
+    public void MakeGuess(IUI ui);
+
+    public bool ISGuessWrong();
 
     public void PrintLastGuessResult(IUI ui);
 
     public void PrintScoreboard(IUI ui);
 
+    public void UpdateScoreboard();
+
     public bool WantsToContinue(IUI uI);
 
-
+    public void DisplayStringToGuess(IUI uI);
 }
 
 class PlayerData
