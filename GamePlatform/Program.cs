@@ -1,5 +1,10 @@
 ﻿IUI ui = new ConsoleIO();
 
+IDigitGuessGame guessGame = new MooGame();
+
+guessGame.ExecuteGame(ui);
+
+
 ui.PrintString("Enter your username: ");
 string playerName = ui.GetString();
 
@@ -118,7 +123,7 @@ static List<PlayerData> GenerateScoreboard()
     return scoreboard.OrderBy(player => player.GetAverageGuesses()).ToList();
 }
 
-interface IUI
+public interface IUI
 {
     public string GetString();
     public void PrintString(string input);
@@ -148,6 +153,22 @@ class ConsoleIO : IUI
     {
         Console.WriteLine(input);
     }
+}
+
+public class MooGame : IDigitGuessGame
+{
+    
+
+    public void ExecuteGame(IUI ui)
+    {
+        
+    }
+}
+
+public interface IDigitGuessGame
+{
+
+    public void ExecuteGame(IUI ui);
 }
 
 class PlayerData
