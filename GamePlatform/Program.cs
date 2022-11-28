@@ -1,7 +1,5 @@
 ﻿IUI ui = new ConsoleIO();
 
-
-
 ui.PrintString("Enter your username: ");
 string playerName = ui.GetString();
 
@@ -14,25 +12,25 @@ while (true)
     ui.PrintString($"For practice, number is: {digitsToGuess}\n");
     string guess = ui.GetString();
 
-    int nGuess = 1;
-    string bbcc = checkBC(digitsToGuess, guess);
-    ui.PrintString($"{bbcc}  \n");
-    while (bbcc != "BBBB,")
+    int guessCounter = 1;
+    string guessResult = GetGuessResult(digitsToGuess, guess);
+    ui.PrintString($"{guessResult}  \n");
+    while (guess != digitsToGuess)
     {
-        nGuess++;
+        guessCounter++;
         guess = ui.GetString();
         ui.PrintString(guess + "\n");
-        bbcc = checkBC(digitsToGuess, guess);
-        ui.PrintString(bbcc + "\n");
+        guessResult = GetGuessResult(digitsToGuess, guess);
+        ui.PrintString(guessResult + "\n");
     }
 
     using (StreamWriter writer = new("scoreboard.txt", append: true))
     {
-        writer.WriteLine(playerName + "#&#" + nGuess);
+        writer.WriteLine(playerName + "#&#" + guessCounter);
     }
 
     PrintScoreboard(ui);
-    ui.PrintString($"\nCorrect, it took {nGuess} guesses\nContinue?");
+    ui.PrintString($"\nCorrect, it took {guessCounter} guesses\nContinue?");
     string answer = ui.GetString();
     if (answer[0] == 'n')
     {
@@ -57,17 +55,16 @@ static string GetDigits() //Fråga sebastian om GetDigitsToGuess blir för lång
     return digits;
 }
 
-
-
-static string checkBC(string goal, string guess)
+static string GetGuessResult(string digitsToGuess, string guess)
 {
-    int cows = 0, bulls = 0;
+    int cows = 0; 
+    int bulls = 0;
     guess += "    ";     // if player entered less than 4 chars
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
         {
-            if (goal[i] == guess[j])
+            if (digitsToGuess[i] == guess[j])
             {
                 if (i == j)
                 {
@@ -91,7 +88,7 @@ static void PrintScoreboard(IUI ui) // vill skriva ut player name, nr of game, a
 
     foreach (PlayerData player in scoreboard)
     {
-        ui.PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.NumberOfGames, player.Average()));
+        ui.PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.NumberOfGames, player.GetAverageGuesses()));
     }
 }
 
@@ -104,7 +101,7 @@ static List<PlayerData> GenerateScoreboard()
         {
             string[] nameAndScore = reader.ReadLine()!.Split("#&#");
             string name = nameAndScore[0];
-            int guesses = Convert.ToInt32(nameAndScore[1]);
+            int guesses = int.Parse(nameAndScore[1]);
 
             PlayerData playerToAdd = new(name, guesses);
 
@@ -118,8 +115,7 @@ static List<PlayerData> GenerateScoreboard()
             }
         }
     }
-    scoreboard.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
-    return scoreboard;
+    return scoreboard.OrderBy(player => player.GetAverageGuesses()).ToList();
 }
 
 interface IUI
@@ -127,19 +123,15 @@ interface IUI
     public string GetString();
     public void PrintString(string input);
     void Exit();
-    void Clear();
 }
 
 class ConsoleIO : IUI
 {
-    public void Clear()
-    {
-        throw new NotImplementedException();
-    }
     public void Exit()
     {
         Environment.Exit(0);
     }
+
     public string GetString()
     {
         string? input;
@@ -177,7 +169,7 @@ class PlayerData
         NumberOfGames++;
     }
 
-    public double Average()
+    public double GetAverageGuesses()
     {
         return (double)totalGuess / NumberOfGames;
     }
