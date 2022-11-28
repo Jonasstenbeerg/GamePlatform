@@ -57,8 +57,8 @@ static string GetDigits() //Fråga sebastian om GetDigitsToGuess blir för lång
 
 static string GetGuessResult(string digitsToGuess, string guess)
 {
-    int cows = 0; 
-    int bulls = 0;
+    string cows = ""; 
+    string bulls = "";
     guess += "    ";     // if player entered less than 4 chars
     for (int i = 0; i < 4; i++)
     {
@@ -68,17 +68,17 @@ static string GetGuessResult(string digitsToGuess, string guess)
             {
                 if (i == j)
                 {
-                    bulls++;                // Jämför goal och guess och hittar rätt
+                    bulls += 'B';                // Jämför goal och guess och hittar rätt
                 }                           // gissningar baserat på indexplats och innehåll
                                             // adderar cow för rätt siffra fel index
                 else                        // adderar bulls för rätt siffra rätt index
                 {                           // returnerar antal bulls och cows i en sträng
-                    cows++;
+                    cows += 'C';
                 }
             }
         }
     }
-    return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
+    return $"{bulls},{cows}";
 }
 
 static void PrintScoreboard(IUI ui) // vill skriva ut player name, nr of game, average guesses
