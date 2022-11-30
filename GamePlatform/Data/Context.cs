@@ -1,11 +1,11 @@
 ﻿namespace GamePlatform.Data
 {
-    sealed class Context
+    sealed class Context : IContext
     {
         private static Context? instance;
-        private Context() 
+        private Context()
         {
-            
+
         }
 
         public static Context? GetInstance()
@@ -31,8 +31,8 @@
                     PlayerData playerToAdd = new(name, guesses);
 
                     if (scoreboard.Any(player => player.Name == playerToAdd.Name))
-                    {                                                                                                 //Sorterar scoreboard på lägst average
-                        scoreboard.Find(player => player.Name == playerToAdd.Name)!.Update(guesses);                  //guess och skriver ut den
+                    {                                                                                //Sorterar scoreboard på lägst average
+                        scoreboard.Find(player => player.Name == playerToAdd.Name)!.Update(guesses); //guess och skriver ut den
                     }
                     else
                     {
@@ -43,7 +43,7 @@
             return scoreboard.OrderBy(player => player.GetAverageGuesses()).ToList();
         }
 
-        public void UpdateScoreboard(string playerName, int guessCounter)
+        public void SavePlayerDataToScoreboard(string playerName, int guessCounter)
         {
             using StreamWriter writer = new("scoreboard.txt", append: true);
             writer.WriteLine(playerName + "#&#" + guessCounter);

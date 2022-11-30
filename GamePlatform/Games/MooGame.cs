@@ -5,17 +5,9 @@ namespace GamePlatform.Games
 {
     public class MooGame : IDigitGuessGame
     {
-        private string? _playerName;
-        private int _guessCounter;
-        private string? _digitsToGuess;
-        private string? _currentGuess;
-        private readonly Context? _context;
-        public MooGame()
-        {
-            _context = Context.GetInstance();
-        }
-
-        public void SetupDigitsToGuess()
+        public int GuessCounter { get; private set; }
+        
+        public string SetupDigitsToGuess()
         {
             Random randomGenerator = new();
             string digits = "";
@@ -29,26 +21,29 @@ namespace GamePlatform.Games
                 }
                 digits += random;
             }
-            _digitsToGuess = digits;
+            return digits;
         }
 
-        public void MakeGuess(IUI ui)
+        public void IncrementGuessCounter()
         {
-            _guessCounter++;
-            _currentGuess = ui.GetString();
-            if (_guessCounter != 1) ui.PrintString($"{_currentGuess}\n");
+            GuessCounter++;
         }
 
-        public void VerifyLastGuess(IUI ui)
+        public void ResetGuessCounter()
+        {
+            GuessCounter = 0;
+        }
+
+        public string GetGuessResult(string guess,string digitsToGuess)
         {
             string cows = "";
             string bulls = "";
 
             for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < _currentGuess!.Length; j++)
+                for (int j = 0; j < guess!.Length; j++)
                 {
-                    if (_digitsToGuess![i] == _currentGuess[j])
+                    if (digitsToGuess![i] == guess[j])
                     {
                         if (i == j)
                         {
@@ -62,48 +57,8 @@ namespace GamePlatform.Games
                     }
                 }
             }
-            ui.PrintString($"{bulls},{cows}");
+            return $"{bulls},{cows}";
         }
 
-        public void PrintScoreboard(IUI ui)
-        {
-            var scoreboard = _context!.GetScoreboard();
-            ui.PrintString("Player   Games Average");
-
-            foreach (PlayerData player in scoreboard)
-            {
-                ui.PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}", 
-                    player.Name, 
-                    player.NumberOfGames, 
-                    player.GetAverageGuesses()));
-            }
-        }
-
-        public void SaveGameResult()
-        {
-            _context!.UpdateScoreboard(_playerName!, _guessCounter);
-        }
-
-        public void RegisterPlayer(IUI ui)
-        {
-            ui.PrintString("Enter your username: ");
-            _playerName = ui.GetString();
-        }
-
-        public bool WantsToContinue(IUI uI)
-        {
-            uI.PrintString($"\nCorrect, it took {_guessCounter} guesses\nContinue?");
-            return uI.GetString()[0] != 'n';
-        }
-
-        public bool IsGuessWrong()
-        {
-            return _currentGuess != _digitsToGuess;
-        }
-
-        public void DisplayStringToGuess(IUI uI)
-        {
-            uI.PrintString($"For practice, number is: {_digitsToGuess}\n");
-        }
     }
 }
