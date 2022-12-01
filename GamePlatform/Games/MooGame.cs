@@ -6,8 +6,20 @@ namespace GamePlatform.Games
     public class MooGame : IDigitGuessGame
     {
         public int GuessCounter { get; private set; }
-        
-        public string SetupDigitsToGuess()
+        public string? PlayerName { get; private set; }
+        public string? CurrentGuess { get; private set; }
+        public string? DigitsToGuess { get; private set; }
+
+        public void SetPlayerName(string? playerName)
+        {
+            PlayerName = playerName!.Trim();
+        }
+        public void SetCurrentGuess(string? guess)
+        {
+            CurrentGuess= guess!.Trim();
+        }
+
+        public void SetupDigitsToGuess()
         {
             Random randomGenerator = new();
             string digits = "";
@@ -21,7 +33,7 @@ namespace GamePlatform.Games
                 }
                 digits += random;
             }
-            return digits;
+           DigitsToGuess = digits;
         }
 
         public void IncrementGuessCounter()
@@ -34,16 +46,16 @@ namespace GamePlatform.Games
             GuessCounter = 0;
         }
 
-        public string GetGuessResult(string guess,string digitsToGuess)
+        public string GetGuessResult()
         {
             string cows = "";
             string bulls = "";
 
             for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < guess!.Length; j++)
+                for (int j = 0; j < CurrentGuess!.Length; j++)
                 {
-                    if (digitsToGuess![i] == guess[j])
+                    if (DigitsToGuess![i] == CurrentGuess[j])
                     {
                         if (i == j)
                         {
@@ -60,5 +72,6 @@ namespace GamePlatform.Games
             return $"{bulls},{cows}";
         }
 
+        
     }
 }

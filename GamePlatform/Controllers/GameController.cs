@@ -1,11 +1,13 @@
 ﻿using GamePlatform.Data;
 using GamePlatform.Interfaces;
+using System.Reflection.Metadata;
 
 public class GameController
 {
     private readonly IUI _ui;
     private readonly IDigitGuessGame _game;
     private readonly IContext _context;
+    private bool _continueGame;
     public GameController(IUI ui, IDigitGuessGame digitGuessGame)
     {
         _ui = ui;
@@ -15,49 +17,71 @@ public class GameController
 
     public void RunGame()
     {
-        _ui.PrintString("Enter your username: \n");
-        var playerName = _ui.GetString();
-        bool continueGame;
+        CreateNewPlayer();
 
         do
         {
-            _game.ResetGuessCounter();
-            var digitsToGuess = _game.SetupDigitsToGuess();
-            _ui.PrintString("New game:\n");
-            _ui.PrintString($"For practice, number is: {digitsToGuess}\n");
-            string guess;
-            
+            CreateNewGame();
 
             do
             {
-                
-                guess = _ui.GetString();
-                _game.IncrementGuessCounter();
-                HandleGuess(guess);
-                var result = _game.GetGuessResult(guess,digitsToGuess);
-                _ui.PrintString($"{result}\n");
+                MakeGuess();
+                VerifyGuess();
             }
-            while (guess != digitsToGuess);
+            while (_game.CurrentGuess != _game.DigitsToGuess);
 
-            
-            HandleSave(_context,playerName);
-            var scoreboard = _context.GetScoreboard();
-            HandleScoreboard(scoreboard);
-            _ui.PrintString($"\nCorrect, it took {_game.GuessCounter} guesses\nContinue?");
-            continueGame = AskToContinue();
+            HandleSave(_context,_game.PlayerName!);
+            ShowAllPlayersScore();
+            _continueGame = AskToContinue();
 
-        } while (continueGame);
+        } while (_continueGame);
 
         _ui.Exit();
     }
 
+    private void ShowAllPlayersScore()
+    {
+        var scoreboard = _context.GetScoreboard();
+        HandleScoreboard(scoreboard);
+    }
+
+    private void VerifyGuess()
+    {
+        var result = _game.GetGuessResult();
+        _ui.PrintString($"{result}\n");
+    }
+
+    private void MakeGuess()
+    {
+        var guess = _ui.GetString();
+        HandleGuess(guess);
+    }
+
+    private void CreateNewGame()
+    {
+        _game.ResetGuessCounter();
+        _game.SetupDigitsToGuess();
+        _ui.PrintString("New game:\n");
+        _ui.PrintString($"For practice, number is: {_game.DigitsToGuess}\n");
+    }
+
+    private void CreateNewPlayer()
+    {
+        _ui.PrintString("Enter your username: \n");
+        var playerName = _ui.GetString();
+        _game.SetPlayerName(playerName);
+    }
+
     private void HandleGuess(string guess)
     {
+        _game.IncrementGuessCounter();
+        _game.SetCurrentGuess(guess);
         if (_game.GuessCounter != 1) _ui.PrintString(guess);
     }
 
     private bool AskToContinue()
     {
+        _ui.PrintString($"\nCorrect, it took {_game.GuessCounter} guesses\nContinue?");
         return _ui.GetString()[0] != 'n';
     }
 

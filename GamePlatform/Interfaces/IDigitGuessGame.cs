@@ -2,9 +2,14 @@
 
 public interface IDigitGuessGame
 {
+    string? PlayerName { get; }
     int GuessCounter { get; }
-    public string SetupDigitsToGuess();
+    string? CurrentGuess { get; }
+    string? DigitsToGuess { get; }
+    public void SetCurrentGuess(string guess);
+    public void SetPlayerName(string? playerName);
+    public void SetupDigitsToGuess();
     public void IncrementGuessCounter();
     public void ResetGuessCounter();
-    public string GetGuessResult(string guess, string digitsToGuess);
+    public string GetGuessResult();
 }
