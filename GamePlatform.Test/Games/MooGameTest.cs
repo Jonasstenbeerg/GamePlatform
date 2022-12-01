@@ -22,7 +22,7 @@ namespace GamePlatform.Test.Games
         public void SetPlayerName_Should_Change_PlayerName_Equal_To_Input()
         {
             const string NameToSet = "svante";
-            _game.SetPlayerName(NameToSet);
+            _game!.SetPlayerName(NameToSet);
 
             var expected = NameToSet;
 
@@ -36,7 +36,7 @@ namespace GamePlatform.Test.Games
         public void SetPlayerName_Must_Require_Characters()
         {
             const string NameToSet = "    ";
-            _game.SetPlayerName(NameToSet);
+            _game!.SetPlayerName(NameToSet);
 
            if(_game.PlayerName == NameToSet) 
             {
@@ -46,7 +46,7 @@ namespace GamePlatform.Test.Games
         [TestMethod]
         public void GetGuessResult_Should_Return_BBBB_On_Correct_Guess()
         {
-            _game.SetupDigitsToGuess();
+            _game!.SetupDigitsToGuess();
             _game.SetCurrentGuess(_game.DigitsToGuess);
 
             var actual = _game.GetGuessResult();
@@ -61,7 +61,7 @@ namespace GamePlatform.Test.Games
         [TestMethod]
         public void IncrementGuessCounter_Should_Increase_GuessCounter_By_One()
         {
-            _game.IncrementGuessCounter();
+            _game!.IncrementGuessCounter();
 
             var expected = 1;
 
@@ -73,7 +73,7 @@ namespace GamePlatform.Test.Games
         [TestMethod]
         public void ResetGuessCounter_Should_Set_GuessCounter_To_Zero()
         {
-            _game.ResetGuessCounter();
+            _game!.ResetGuessCounter();
 
             var expected = 0;
 
@@ -85,7 +85,7 @@ namespace GamePlatform.Test.Games
         [TestMethod]
         public void SetupDigitsToGuess_Should_Return_A_String()
         {
-            _game.SetupDigitsToGuess();
+            _game!.SetupDigitsToGuess();
 
             Assert.IsInstanceOfType(_game.DigitsToGuess, typeof(string));
             
@@ -94,7 +94,7 @@ namespace GamePlatform.Test.Games
         [TestMethod]
         public void SetupDigitsToGuess_Return_Value_Should_Be_Four_In_Length()
         {
-            _game.SetupDigitsToGuess();
+            _game!.SetupDigitsToGuess();
 
             var expected = 4;
 
@@ -106,7 +106,7 @@ namespace GamePlatform.Test.Games
         [TestMethod]
         public void SetupDigitsToGuess_Return_Value_Should_Only_Be_Digits()
         {
-            _game.SetupDigitsToGuess();
+            _game!.SetupDigitsToGuess();
 
             foreach (var number in _game.DigitsToGuess!)
             {
@@ -120,7 +120,7 @@ namespace GamePlatform.Test.Games
         [TestMethod]
         public void SetupDigitsToGuess_Return_Value_Should_Have_Unique_Characters()
         {
-            _game.SetupDigitsToGuess();
+            _game!.SetupDigitsToGuess();
 
             bool[] array = new bool[100];
 
