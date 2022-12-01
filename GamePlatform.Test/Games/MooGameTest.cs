@@ -16,6 +16,8 @@ namespace GamePlatform.Test.Games
         public void Initialize() 
         {
             _game = new MooGame();
+            _game!.SetupDigitsToGuess();
+            _game.SetCurrentGuess(_game.DigitsToGuess);
         }
 
         [TestMethod]
@@ -44,12 +46,22 @@ namespace GamePlatform.Test.Games
             }
         }
         [TestMethod]
+        public void SetCurrentGuess_Should_Change_PlayerName_Equal_To_Input()
+        {
+            const string GuessToMake = "1234";
+            _game!.SetCurrentGuess(GuessToMake);
+
+            var expected = GuessToMake;
+
+            var actual = _game.CurrentGuess;
+
+            Assert.AreEqual(expected, actual);
+
+        }
+        [TestMethod]
         public void GetGuessResult_Should_Return_BBBB_On_Correct_Guess()
         {
-            _game!.SetupDigitsToGuess();
-            _game.SetCurrentGuess(_game.DigitsToGuess);
-
-            var actual = _game.GetGuessResult();
+            var actual = _game!.GetGuessResult();
 
             var expected = "BBBB,";
 

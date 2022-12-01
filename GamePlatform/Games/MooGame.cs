@@ -14,6 +14,7 @@ namespace GamePlatform.Games
         {
             PlayerName = playerName!.Trim();
         }
+
         public void SetCurrentGuess(string? guess)
         {
             CurrentGuess= guess!.Trim();
