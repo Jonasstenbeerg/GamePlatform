@@ -30,7 +30,7 @@ public class GameController
             }
             while (_game.CurrentGuess != _game.DigitsToGuess);
 
-            HandleSave(_context,_game.PlayerName!);
+            HandleSave();
             ShowAllPlayersScore();
             _continueGame = AskToContinue();
 
@@ -41,8 +41,9 @@ public class GameController
 
     private void ShowAllPlayersScore()
     {
-        var scoreboard = _context.GetScoreboard();
-        HandleScoreboard(scoreboard);
+        var allPlayerStats = _context.GetAllPlayers();
+        allPlayerStats.OrderBy(player => player.AverageGuesses);
+        GenerateScoreboard(allPlayerStats);
     }
 
     private void VerifyGuess()
@@ -70,6 +71,13 @@ public class GameController
         _ui.PrintString("Enter your username: \n");
         var playerName = _ui.GetString();
         _game.SetPlayerName(playerName);
+
+        var player = _context.GetPlayerOnName(playerName);
+
+        if (player == null)
+        {
+            _context.PostPlayer(playerName);
+        }
     }
 
     private void HandleGuess(string guess)
@@ -85,21 +93,29 @@ public class GameController
         return _ui.GetString()[0] != 'n';
     }
 
-    private void HandleScoreboard(List<PlayerData> scoreboard)
+    private void GenerateScoreboard(List<Player> scoreboard)
     {
         _ui.PrintString("Player   games average");
         foreach(var player in scoreboard)
         {
+            
             _ui.PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}",
                player.Name, 
                player.NumberOfGames, 
-               player.GetAverageGuesses()));
+               player.AverageGuesses));
         }
     }
 
-    private void HandleSave(IContext db, string playerName)
+    private void HandleSave()
     {
-        db.SavePlayerDataToScoreboard(playerName, _game.GuessCounter);
+        var currentPlayer = new Player()
+        {
+            Name = _game.PlayerName,
+            TotalGuesses = _game.GuessCounter,
+
+        };
+
+        _context.PutPlayer(currentPlayer);
     }
 
     

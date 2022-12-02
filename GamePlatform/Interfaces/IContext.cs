@@ -1,5 +1,7 @@
 ﻿public interface IContext
 {
-    public void SavePlayerDataToScoreboard(string playerName, int guessCounter);
-    public List<PlayerData> GetScoreboard();
+    public Player GetPlayerOnName(string name);
+    public List<Player> GetAllPlayers();
+    public void PostPlayer(string playername);
+    public void PutPlayer(Player _player);
 }

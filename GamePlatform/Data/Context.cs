@@ -17,36 +17,64 @@
             return instance;
         }
 
-        public List<PlayerData> GetScoreboard()
+        public Player GetPlayerOnName(string name)
         {
-            List<PlayerData> scoreboard = new();
+            var allPlayers = GetAllPlayers();
+
+            return allPlayers.FirstOrDefault(player => player.Name == name);
+        }
+        public List<Player> GetAllPlayers()
+        {
+            List<Player> players = new();
             using (StreamReader reader = new("scoreboard.txt"))
             {
                 while (!reader.EndOfStream)
                 {
-                    string[] nameAndScore = reader.ReadLine()!.Split("#&#");
-                    string name = nameAndScore[0];
-                    int guesses = int.Parse(nameAndScore[1]);
-
-                    PlayerData playerToAdd = new(name, guesses);
-
-                    if (scoreboard.Any(player => player.Name == playerToAdd.Name))
-                    {                                                                                //Sorterar scoreboard på lägst average
-                        scoreboard.Find(player => player.Name == playerToAdd.Name)!.Update(guesses); //guess och skriver ut den
-                    }
-                    else
+                    string[] playerStats = reader.ReadLine()!.Split("#&#");
+                    
+                    Player player = new Player()
                     {
-                        scoreboard.Add(playerToAdd);
-                    }
+                        Name = playerStats[0],
+                        TotalGuesses = int.Parse(playerStats[1]),
+                        NumberOfGames = int.Parse(playerStats[2]),
+                        AverageGuesses= double.Parse(playerStats[3]),
+                    };
+                    players.Add(player);
                 }
             }
-            return scoreboard.OrderBy(player => player.GetAverageGuesses()).ToList();
+            return players;
         }
-
-        public void SavePlayerDataToScoreboard(string playerName, int guessCounter)
+        public void PostPlayer(string playername) 
         {
-            using StreamWriter writer = new("scoreboard.txt", append: true);
-            writer.WriteLine(playerName + "#&#" + guessCounter);
+            var allPlayers = GetAllPlayers();
+            allPlayers.Add(new Player() { Name = playername });
+            SavePlayers(allPlayers);
+        }
+        public void PutPlayer(Player _player) 
+        {
+            var allPlayers = GetAllPlayers();
+
+            foreach (var player in allPlayers)
+            {
+                if (player.Name == _player.Name)
+                {
+                    player.TotalGuesses += _player.TotalGuesses;
+                    player.NumberOfGames++;
+                    player.AverageGuesses = (double)player.TotalGuesses / player.NumberOfGames;
+                }
+            }
+            SavePlayers(allPlayers);
+        }
+        private void SavePlayers(List<Player> players)
+        {
+            using (StreamWriter writer = new("scoreboard.txt", append: false))
+            {
+                foreach (var player in players)
+                {
+                    writer.WriteLine(player.Name + "#&#" + player.TotalGuesses + "#&#" + player.NumberOfGames + "#&#" + player.AverageGuesses);
+                }
+            };
+            
         }
     }
 }
