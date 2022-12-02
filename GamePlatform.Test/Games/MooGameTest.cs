@@ -95,7 +95,7 @@ namespace GamePlatform.Test.Games
         }
 
         [TestMethod]
-        public void SetupDigitsToGuess_Should_Return_A_String()
+        public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_A_String()
         {
             _game!.SetupDigitsToGuess();
 
@@ -104,7 +104,7 @@ namespace GamePlatform.Test.Games
         }
 
         [TestMethod]
-        public void SetupDigitsToGuess_Return_Value_Should_Be_Four_In_Length()
+        public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_Be_Four_In_Length()
         {
             _game!.SetupDigitsToGuess();
 
@@ -116,7 +116,7 @@ namespace GamePlatform.Test.Games
 
         }
         [TestMethod]
-        public void SetupDigitsToGuess_Return_Value_Should_Only_Be_Digits()
+        public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_Only_Be_Digits()
         {
             _game!.SetupDigitsToGuess();
 
@@ -130,7 +130,7 @@ namespace GamePlatform.Test.Games
 
         }
         [TestMethod]
-        public void SetupDigitsToGuess_Return_Value_Should_Have_Unique_Characters()
+        public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_Unique_Characters()
         {
             _game!.SetupDigitsToGuess();
 
