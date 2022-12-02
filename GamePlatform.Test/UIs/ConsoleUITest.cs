@@ -52,9 +52,9 @@ namespace GamePlatform.Test.UIs
         {
             const string input = "Hej";
            
-            _consoleIO.PrintString(input);
+            _consoleIO!.PrintString(input);
 
-            Assert.IsTrue(_iO.HandleUserInputRan);
+            Assert.IsTrue(_iO!.HandleUserInputRan);
         }
     }
 }
