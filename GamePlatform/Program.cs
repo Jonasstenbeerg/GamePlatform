@@ -1,8 +1,12 @@
 ﻿using GamePlatform.Games;
+using GamePlatform.Helpers;
 using GamePlatform.Interfaces;
 using static System.Net.Mime.MediaTypeNames;
 
-IUI ui = new ConsoleIO();
+ITerminator terminator = new Terminator();
+IIO iOHandler = new IO();
+
+IUI ui = new ConsoleUI(terminator,iOHandler);
 
 IDigitGuessGame guessGame = new MooGame();
 
