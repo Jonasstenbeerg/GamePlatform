@@ -6,13 +6,13 @@ public class GameController
 {
     private readonly IUI _ui;
     private readonly IDigitGuessGame _game;
-    private readonly IContext _context;
+    private readonly IDataAccess _context;
     private bool _continueGame;
-    public GameController(IUI ui, IDigitGuessGame digitGuessGame)
+    public GameController(IUI ui, IDigitGuessGame digitGuessGame, IDataAccess context)
     {
         _ui = ui;
         _game = digitGuessGame;
-        _context = Context.GetInstance()!;
+        _context = context;
     }
 
     public void RunGame()

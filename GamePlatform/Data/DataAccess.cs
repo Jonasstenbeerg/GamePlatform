@@ -1,20 +1,12 @@
 ﻿namespace GamePlatform.Data
 {
-    sealed class Context : IContext
+    sealed class DataAccess : IDataAccess
     {
-        private static Context? instance;
-        private Context()
+        private string _filePath;
+        private const string _separator = "#&#";
+        public DataAccess(string filePath)
         {
-
-        }
-
-        public static Context? GetInstance()
-        {
-            if (instance == null)
-            {
-                instance = new Context();
-            }
-            return instance;
+            _filePath = filePath;
         }
 
         public Player GetPlayerOnName(string name)
@@ -26,31 +18,38 @@
         public List<Player> GetAllPlayers()
         {
             List<Player> players = new();
-            using (StreamReader reader = new("scoreboard.txt"))
+            using (StreamReader reader = new(_filePath))
             {
                 while (!reader.EndOfStream)
                 {
-                    string[] playerStats = reader.ReadLine()!.Split("#&#");
-                    
-                    Player player = new Player()
-                    {
-                        Name = playerStats[0],
-                        TotalGuesses = int.Parse(playerStats[1]),
-                        NumberOfGames = int.Parse(playerStats[2]),
-                        AverageGuesses= double.Parse(playerStats[3]),
-                    };
+                    Player player = ParsePlayerDataFromString(reader);
                     players.Add(player);
                 }
             }
             return players;
         }
-        public void PostPlayer(string playername) 
+
+        public Player ParsePlayerDataFromString(StreamReader reader)
+        {
+            string[] playerStats = reader.ReadLine()!.Split(_separator);
+
+            Player player = new Player()
+            {
+                Name = playerStats[0],
+                TotalGuesses = int.Parse(playerStats[1]),
+                NumberOfGames = int.Parse(playerStats[2]),
+                AverageGuesses = double.Parse(playerStats[3]),
+            };
+            return player;
+        }
+
+        public void PostPlayer(string playername)
         {
             var allPlayers = GetAllPlayers();
             allPlayers.Add(new Player() { Name = playername });
             SavePlayers(allPlayers);
         }
-        public void PutPlayer(Player _player) 
+        public void PutPlayer(Player _player)
         {
             var allPlayers = GetAllPlayers();
 
@@ -67,14 +66,16 @@
         }
         private void SavePlayers(List<Player> players)
         {
-            using (StreamWriter writer = new("scoreboard.txt", append: false))
+            using (StreamWriter writer = new(_filePath, append: false))
             {
                 foreach (var player in players)
                 {
-                    writer.WriteLine(player.Name + "#&#" + player.TotalGuesses + "#&#" + player.NumberOfGames + "#&#" + player.AverageGuesses);
+                    writer.WriteLine(player.Name + _separator
+                        + player.TotalGuesses + _separator
+                        + player.NumberOfGames + _separator
+                        + player.AverageGuesses);
                 }
             };
-            
         }
     }
 }

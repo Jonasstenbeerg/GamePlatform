@@ -1,4 +1,4 @@
-﻿public interface IContext
+﻿public interface IDataAccess
 {
     public Player GetPlayerOnName(string name);
     public List<Player> GetAllPlayers();
