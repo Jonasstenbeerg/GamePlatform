@@ -8,5 +8,6 @@
     public Player()
     {
         NumberOfGames = 1;
+        
     }
 }

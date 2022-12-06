@@ -89,7 +89,8 @@ public class GameController
     {
         _ui.PrintString("Player   games average");
         List<Player> distinctPlayers = GetDistinctPlayers(players);
-        foreach(var player in distinctPlayers)
+        
+        foreach(var player in distinctPlayers.OrderBy(player => player.AverageGuesses))
         {
 
             _ui.PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}",
@@ -97,6 +98,28 @@ public class GameController
                player.NumberOfGames,
                player.AverageGuesses));
         }
+    }
+    private List<Player> GetDistinctPlayers(List<Player> players)
+    {
+        var result = new List<Player>();
+        foreach (var player in players)
+        {
+            var p = result.FirstOrDefault(p => p.Name == player.Name);
+
+            if (p == null)
+            {
+                player.AverageGuesses = (double)player.TotalGuesses / player.NumberOfGames;
+                result.Add(player);
+            }
+            else
+            {
+                p.NumberOfGames += player.NumberOfGames;
+                p.TotalGuesses += player.TotalGuesses;
+                p.AverageGuesses = (double)p.TotalGuesses / p.NumberOfGames;
+            }
+        }
+
+        return result;
     }
 
     private void HandleSave()
