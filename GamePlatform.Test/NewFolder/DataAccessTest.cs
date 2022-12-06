@@ -22,7 +22,7 @@ namespace GamePlatform.Test.NewFolder
         public void Initialize()
         {
             Mock<IFilemanager> filemangaerMock = new Mock<IFilemanager>();
-            string testContent = "sven#&#4";
+            string testContent = "sven#&#4\nJohannes#&#1";
             byte[] testBytes = Encoding.UTF8.GetBytes(testContent);
 
             MemoryStream testMemoryStream = new MemoryStream(testBytes);

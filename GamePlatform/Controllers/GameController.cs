@@ -42,8 +42,7 @@ public class GameController
     private void ShowAllPlayersScore()
     {
         var allPlayerStats = _context.GetAllPlayers();
-        allPlayerStats.OrderBy(player => player.AverageGuesses);
-        GenerateScoreboard(allPlayerStats);
+        GeneratePlayersResult(allPlayerStats);
     }
 
     private void VerifyGuess()
@@ -71,13 +70,6 @@ public class GameController
         _ui.PrintString("Enter your username: \n");
         var playerName = _ui.GetString();
         _game.SetPlayerName(playerName);
-
-        var player = _context.GetPlayerOnName(playerName);
-
-        if (player == null)
-        {
-            _context.PostPlayer(playerName);
-        }
     }
 
     private void HandleGuess(string guess)
@@ -93,10 +85,11 @@ public class GameController
         return _ui.GetString()[0] != 'n';
     }
 
-    private void GenerateScoreboard(List<Player> scoreboard)
+    private void GeneratePlayersResult(List<Player> players)
     {
         _ui.PrintString("Player   games average");
-        foreach(var player in scoreboard)
+        List<Player> distinctPlayers = GetDistinctPlayers(players);
+        foreach(var player in distinctPlayers)
         {
             
             _ui.PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}",
@@ -104,6 +97,28 @@ public class GameController
                player.NumberOfGames, 
                player.AverageGuesses));
         }
+    }
+
+    private List<Player> GetDistinctPlayers(List<Player> players)
+    {
+        var result = new List<Player>();
+        foreach (var player in players)
+        {
+            var p = result.FirstOrDefault(p=> p.Name == player.Name);
+
+            if (p == null)
+            {
+                result.Add(player);
+            }
+            else
+            {
+                p.NumberOfGames += player.NumberOfGames;
+                p.TotalGuesses += player.TotalGuesses;
+                p.AverageGuesses = (double)p.TotalGuesses / p.NumberOfGames;
+            }
+        }
+
+        return result.OrderBy(player => player.AverageGuesses).ToList();
     }
 
     private void HandleSave()
@@ -115,7 +130,7 @@ public class GameController
 
         };
 
-        _context.PutPlayer(currentPlayer);
+        _context.SavePlayer(currentPlayer);
     }
 
     
