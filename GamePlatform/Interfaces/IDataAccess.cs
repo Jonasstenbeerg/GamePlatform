@@ -1,7 +1,6 @@
 ﻿public interface IDataAccess
 {
-    public Player GetPlayerOnName(string name);
+    public void SavePlayer(Player player);
     public List<Player> GetAllPlayers();
-    public void PostPlayer(string playername);
-    public void PutPlayer(Player _player);
+    
 }

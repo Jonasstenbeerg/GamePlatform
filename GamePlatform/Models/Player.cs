@@ -4,4 +4,9 @@
     public int NumberOfGames { get; set; }
     public int TotalGuesses { get; set; }
     public double AverageGuesses { get; set; }
+
+    public Player()
+    {
+        NumberOfGames = 1;
+    }
 }

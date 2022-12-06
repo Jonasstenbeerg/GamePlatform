@@ -5,7 +5,9 @@ using GamePlatform.Interfaces;
 
 ITerminator terminator = new Terminator();
 IIO iOHandler = new IO();
-IDataAccess context = new DataAccess("scoreboard.txt");
+IFilemanager filemanager = new Filemanager();
+
+IDataAccess context = new DataAccess("scoreboard.txt",filemanager);
 
 IUI ui = new ConsoleUI(terminator, iOHandler);
 
