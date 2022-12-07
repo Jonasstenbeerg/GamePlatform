@@ -88,38 +88,15 @@ public class GameController
     private void GeneratePlayersResult(List<Player> players)
     {
         _ui.PrintString("Player   games average");
-        List<Player> distinctPlayers = GetDistinctPlayers(players);
+        List<Player> distinctPlayers = players.GetDistinctPlayers();
         
         foreach(var player in distinctPlayers.OrderBy(player => player.AverageGuesses))
         {
-
             _ui.PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}",
                player.Name,
                player.NumberOfGames,
                player.AverageGuesses));
         }
-    }
-    private List<Player> GetDistinctPlayers(List<Player> players)
-    {
-        var result = new List<Player>();
-        foreach (var player in players)
-        {
-            var p = result.FirstOrDefault(p => p.Name == player.Name);
-
-            if (p == null)
-            {
-                player.AverageGuesses = (double)player.TotalGuesses / player.NumberOfGames;
-                result.Add(player);
-            }
-            else
-            {
-                p.NumberOfGames += player.NumberOfGames;
-                p.TotalGuesses += player.TotalGuesses;
-                p.AverageGuesses = (double)p.TotalGuesses / p.NumberOfGames;
-            }
-        }
-
-        return result;
     }
 
     private void HandleSave()
@@ -133,6 +110,27 @@ public class GameController
 
         _context.SavePlayer(currentPlayer);
     }
+}
 
+public static class PlayerExtensions
+{
+    internal static List<Player> GetDistinctPlayers(this IEnumerable<Player> players)
+    {
+        List<Player> distinctPlayers = new();
+        foreach (Player player in players)
+        {
+            Player? distinctPlayer = distinctPlayers.FirstOrDefault(p => p.Name == player.Name);
 
+            if (distinctPlayer == null)
+            {
+                distinctPlayers.Add(player);
+            }
+            else
+            {
+                distinctPlayer?.IncrementStats(player.TotalGuesses, player.NumberOfGames);
+            }
+        }
+
+        return distinctPlayers;
+    }
 }
