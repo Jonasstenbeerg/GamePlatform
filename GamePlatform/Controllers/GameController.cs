@@ -1,18 +1,19 @@
 ﻿using GamePlatform.Data;
 using GamePlatform.Interfaces;
+using GamePlatform.Tools;
 using System.Reflection.Metadata;
 
 public class GameController
 {
     private readonly IUI _ui;
     private readonly IDigitGuessGame _game;
-    private readonly IDataAccess _context;
+    private readonly IDataAccess _dataAccess;
     private bool _continueGame;
-    public GameController(IUI ui, IDigitGuessGame digitGuessGame, IDataAccess context)
+    public GameController(IUI ui, IDigitGuessGame digitGuessGame, IDataAccess dataAccess)
     {
         _ui = ui;
         _game = digitGuessGame;
-        _context = context;
+        _dataAccess = dataAccess;
     }
 
     public void RunGame()
@@ -41,7 +42,7 @@ public class GameController
 
     private void ShowAllPlayersScore()
     {
-        var allPlayerStats = _context.GetAllPlayers();
+        var allPlayerStats = _dataAccess.GetAllPlayers();
         GeneratePlayersResult(allPlayerStats);
     }
 
@@ -108,29 +109,6 @@ public class GameController
 
         };
 
-        _context.SavePlayer(currentPlayer);
-    }
-}
-
-public static class PlayerExtensions
-{
-    internal static List<Player> GetDistinctPlayers(this IEnumerable<Player> players)
-    {
-        List<Player> distinctPlayers = new();
-        foreach (Player player in players)
-        {
-            Player? distinctPlayer = distinctPlayers.FirstOrDefault(p => p.Name == player.Name);
-
-            if (distinctPlayer == null)
-            {
-                distinctPlayers.Add(player);
-            }
-            else
-            {
-                distinctPlayer?.IncrementStats(player.TotalGuesses, player.NumberOfGames);
-            }
-        }
-
-        return distinctPlayers;
+        _dataAccess.SavePlayer(currentPlayer);
     }
 }

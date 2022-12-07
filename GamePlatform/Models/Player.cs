@@ -16,9 +16,10 @@
         NumberOfGames = numberOfGuesses;
         NumberOfGames = 1;
     }
-    public void IncrementStats(int totalGuesses, int numberOfGames)
+
+    public void IncrementStats(int totalGuesses)
     {
         TotalGuesses += totalGuesses;
-        NumberOfGames += numberOfGames;
+        NumberOfGames ++;
     }
 }
