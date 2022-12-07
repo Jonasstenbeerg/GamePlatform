@@ -34,9 +34,10 @@ namespace GamePlatform.Test.NewFolder
             byte[] testBytes = Encoding.UTF8.GetBytes(testContent);
 
             using (MemoryStream testMemoryStream = new MemoryStream(testBytes))
+            using (StreamReader testStreamReader = new StreamReader(testMemoryStream))
             {
                 filemangaerMock.Setup(m => m.StreamReader(It.IsAny<string>()))
-                .Returns(() => new StreamReader(testMemoryStream));
+                .Returns(() => testStreamReader);
                 _dataAccess = new DataAccess("test.txt", filemangaerMock.Object);
 
 
