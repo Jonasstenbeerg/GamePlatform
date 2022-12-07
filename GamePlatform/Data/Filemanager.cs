@@ -9,5 +9,9 @@ namespace GamePlatform.Data
             return new StreamReader(path);
         }
 
+        public StreamWriter StreamWriter(string path)
+        {
+            return new StreamWriter(path, append: true);
+        }
     }
 }
