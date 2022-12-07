@@ -43,7 +43,7 @@ namespace GamePlatform.Data
 
         public void SavePlayer(Player player)
         {
-            using (StreamWriter writer = new(_filePath, append: true))
+            using (StreamWriter writer = _fileManager.StreamWriter(_filePath))
             {
                 
                 writer.WriteLine(player.Name + _separator + player.TotalGuesses);
