@@ -13,7 +13,7 @@ IDataAccess context = new DataAccess("scoreboard.txt",filemanager);
 
 IUI ui = new ConsoleUI(terminator, iOHandler);
 
-Game guessGame = new Game(new MastermindGame());
+IDigitGuessGame guessGame = new Game(new MastermindGame());
 
 GameController controller = new(ui, guessGame, context);
 

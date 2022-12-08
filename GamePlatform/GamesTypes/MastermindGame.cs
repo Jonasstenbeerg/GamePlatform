@@ -9,7 +9,7 @@ namespace GamePlatform.Games
 {
     internal class MastermindGame : IGameType
     {
-        public string ConfigureSetupDigitsToGuess()
+        public string ConfigureSetDigitsToGuess()
         {
             Random randomGenerator = new();
             string digits = "";

@@ -8,6 +8,6 @@ namespace GamePlatform.Interfaces
 {
     public interface IGameType
     {
-        public string ConfigureSetupDigitsToGuess();
+        public string ConfigureSetDigitsToGuess();
     }
 }

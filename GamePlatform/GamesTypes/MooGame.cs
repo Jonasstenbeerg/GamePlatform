@@ -9,17 +9,17 @@ namespace GamePlatform.GamesTypes
 {
     internal class MooGame : IGameType
     {
-        public string ConfigureSetupDigitsToGuess()
+        public string ConfigureSetDigitsToGuess()
         {
             Random randomGenerator = new();
             string digits = "";
             for (int i = 0; i < 4; i++)
             {
                 int random = randomGenerator.Next(10);
-                while (digits.Contains(random.ToString()))    //Slumpar fram 4 unika siffror mellan 0 och 9
+                while (digits.Contains(random.ToString()))    
                 {
-                    random = randomGenerator.Next(10);        //Skapa en ytterligare funktion som adderar random unique number?
-                                                              //Private används bara till Moo, ingår inte i Interface
+                    random = randomGenerator.Next(10);       
+                                                              
                 }
                 digits += random;
             }
