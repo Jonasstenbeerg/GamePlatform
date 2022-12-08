@@ -8,7 +8,7 @@ public interface IDigitGuessGame
     string? DigitsToGuess { get; }
     public void SetCurrentGuess(string guess);
     public void SetPlayerName(string? playerName);
-    public void SetupDigitsToGuess();
+    public void SetDigitsToGuess();
     public void IncrementGuessCounter();
     public void ResetGuessCounter();
     public string GetGuessResult();

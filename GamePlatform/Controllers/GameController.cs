@@ -60,7 +60,7 @@ public class GameController
     private void CreateNewGame()
     {
         _game.ResetGuessCounter();
-        _game.SetupDigitsToGuess();
+        _game.SetDigitsToGuess();
         _ui.PrintString("New game:\n");
         _ui.PrintString($"For practice, number is: {_game.DigitsToGuess}\n");
     }
