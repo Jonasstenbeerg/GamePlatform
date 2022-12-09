@@ -54,17 +54,17 @@ namespace GamePlatform.TemplateClasses
                     {
                         if (i == j)
                         {
-                            bulls += 'B';           // Jämför goal och guess och hittar rätt
-                        }                           // gissningar baserat på indexplats och innehåll
-                                                    // adderar cow för rätt siffra fel index
-                        else                        // adderar bulls för rätt siffra rätt index
-                        {                           // returnerar antal bulls och cows i en sträng
+                            bulls += 'B';           
+                        }                           
+                                                   
+                        else                       
+                        {                          
                             cows += 'C';
                         }
                     }
                 }
             }
-            return $"{bulls},{cows}";
+            return $"{bulls},{cows}".Substring(0,5);
         }
     }
 }
