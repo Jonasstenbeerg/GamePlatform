@@ -36,7 +36,7 @@ namespace GamePlatform.Data
             {
                 Name = playerStats[0],
                 TotalGuesses = int.Parse(playerStats[1])
-               
+
             };
             return player;
         }
@@ -45,9 +45,9 @@ namespace GamePlatform.Data
         {
             using (StreamWriter writer = _fileManager.StreamWriter(_filePath))
             {
-                
+
                 writer.WriteLine(player.Name + _separator + player.TotalGuesses);
-                
+
             };
         }
 

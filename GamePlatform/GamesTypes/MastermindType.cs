@@ -11,7 +11,7 @@ namespace GamePlatform.Games
             for (int i = 0; i < 4; i++)
             {
                 int random = randomGenerator.Next(7);
-               
+
                 digits += random;
             }
             return digits;

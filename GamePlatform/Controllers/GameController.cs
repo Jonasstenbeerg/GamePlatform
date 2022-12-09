@@ -1,7 +1,5 @@
-﻿using GamePlatform.Data;
-using GamePlatform.Interfaces;
+﻿using GamePlatform.Interfaces;
 using GamePlatform.Tools;
-using System.Reflection.Metadata;
 
 public class GameController
 {
@@ -90,8 +88,8 @@ public class GameController
     {
         _ui.PrintString("Player   games average");
         List<Player> distinctPlayers = players.GetDistinctPlayers();
-        
-        foreach(var player in distinctPlayers.OrderBy(player => player.AverageGuesses))
+
+        foreach (var player in distinctPlayers.OrderBy(player => player.AverageGuesses))
         {
             _ui.PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}",
                player.Name,
