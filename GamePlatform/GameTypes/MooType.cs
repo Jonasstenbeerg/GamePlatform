@@ -1,8 +1,8 @@
 ﻿using GamePlatform.Interfaces;
 
-namespace GamePlatform.Games
+namespace GamePlatform.GameTypes
 {
-    internal class MastermindType : IGameType
+    internal class MooType : IGameType
     {
         public string ConfigureSetDigitsToGuess()
         {
@@ -10,8 +10,12 @@ namespace GamePlatform.Games
             string digits = "";
             for (int i = 0; i < 4; i++)
             {
-                int random = randomGenerator.Next(7);
+                int random = randomGenerator.Next(10);
+                while (digits.Contains(random.ToString()))
+                {
+                    random = randomGenerator.Next(10);
 
+                }
                 digits += random;
             }
             return digits;

@@ -1,6 +1,6 @@
 ﻿using GamePlatform.Interfaces;
 
-namespace GamePlatform.Helpers
+namespace GamePlatform.Tools
 {
     public class Terminator : ITerminator
     {
