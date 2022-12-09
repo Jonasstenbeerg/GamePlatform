@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GamePlatform.Games
 {
-    internal class MastermindGame : IGameType
+    internal class MastermindType : IGameType
     {
         public string ConfigureSetDigitsToGuess()
         {
