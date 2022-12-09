@@ -5,8 +5,9 @@ using GamePlatform.Helpers;
 using GamePlatform.Interfaces;
 using GamePlatform.TemplateClasses;
 
+//För att skapa ett nytt spel lägg till en ny instance av game i Dictionaryn med givet namn och typ av spel
+Dictionary<string, Game> GameList = new Dictionary<string, Game>() { { "Moogame", new Game(new MooType()) }, { "Mastermind", new Game(new MastermindType()) } }; 
 
-Dictionary<string, Game> GameList = new Dictionary<string, Game>() { { "Moogame", new Game(new MooType()) }, { "Mastermind", new Game(new MastermindType()) } }; //För att skapa ett nytt spel lägg till en ny instance av game med givet namn och typ av spel
 
 ITerminator terminator = new Terminator();  //För att hantera tester
 IIO iOHandler = new IO();                   //För att hantera tester
