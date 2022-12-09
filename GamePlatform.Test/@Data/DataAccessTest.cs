@@ -1,28 +1,20 @@
-﻿using GamePlatform.Games;
-using GamePlatform.Data;
+﻿using GamePlatform.Data;
 using GamePlatform.Interfaces;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using System.Reflection;
-using GamePlatform.Test.Fakes;
 
 namespace GamePlatform.Test.NewFolder
 {
     [TestClass]
     public class DataAccessTest
     {
-         
+
         DataAccess _dataAccess;
 
         [TestInitialize]
         public void Initialize()
         {
-            
+
 
         }
 

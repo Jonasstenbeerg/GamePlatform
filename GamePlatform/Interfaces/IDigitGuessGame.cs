@@ -1,6 +1,4 @@
-﻿using GamePlatform.Interfaces;
-
-public interface IDigitGuessGame
+﻿public interface IDigitGuessGame
 {
     string? PlayerName { get; }
     int GuessCounter { get; }

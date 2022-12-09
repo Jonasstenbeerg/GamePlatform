@@ -1,5 +1,5 @@
-﻿using GamePlatform.TemplateClasses;
-using GamePlatform.GamesTypes;
+﻿using GamePlatform.GamesTypes;
+using GamePlatform.TemplateClasses;
 
 namespace GamePlatform.Test.Games
 {
@@ -7,9 +7,9 @@ namespace GamePlatform.Test.Games
     public class MooGameTest
     {
         private Game _game;
-        
-        [TestInitialize] 
-        public void Initialize() 
+
+        [TestInitialize]
+        public void Initialize()
         {
             _game = new Game(new MooType());
             _game!.SetDigitsToGuess();
@@ -24,7 +24,7 @@ namespace GamePlatform.Test.Games
 
             var expected = NameToSet;
 
-            var actual = _game.PlayerName; 
+            var actual = _game.PlayerName;
 
             Assert.AreEqual(expected, actual);
 
@@ -36,7 +36,7 @@ namespace GamePlatform.Test.Games
             const string NameToSet = "    ";
             _game!.SetPlayerName(NameToSet);
 
-           if(_game.PlayerName == NameToSet) 
+            if (_game.PlayerName == NameToSet)
             {
                 Assert.Fail("Player name set to no character value");
             }
@@ -96,7 +96,7 @@ namespace GamePlatform.Test.Games
             _game!.SetupDigitsToGuess();
 
             Assert.IsInstanceOfType(_game.DigitsToGuess, typeof(string));
-            
+
         }
 
         [TestMethod]
@@ -139,8 +139,8 @@ namespace GamePlatform.Test.Games
                 else
                     array[(int)number] = true;
             }
-                
-            
+
+
         }
 
     }
