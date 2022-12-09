@@ -8,12 +8,12 @@ public class ConsoleUI : IUI
     public ConsoleUI(ITerminator terminator, IIO iO)
     {
         _terminator = terminator;
-        _iO= iO;
+        _iO = iO;
     }
 
     public void Exit()
     {
-       _terminator.TerminateProgram();
+        _terminator.TerminateProgram();
     }
 
     public string GetString()

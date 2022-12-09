@@ -1,5 +1,4 @@
-﻿using GamePlatform.Data;
-using GamePlatform.Interfaces;
+﻿using GamePlatform.Interfaces;
 
 namespace GamePlatform.TemplateClasses
 {
@@ -67,7 +66,5 @@ namespace GamePlatform.TemplateClasses
             }
             return $"{bulls},{cows}";
         }
-
-
     }
 }

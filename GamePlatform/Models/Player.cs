@@ -3,11 +3,11 @@
     public string? Name { get; set; }
     public int NumberOfGames { get; set; }
     public int TotalGuesses { get; set; }
-    public double AverageGuesses { get { return (double)TotalGuesses / NumberOfGames; }}
+    public double AverageGuesses { get { return (double)TotalGuesses / NumberOfGames; } }
 
     public Player()
     {
-        NumberOfGames = 1;      
+        NumberOfGames = 1;
     }
 
     public Player(string name, int numberOfGuesses)
@@ -20,6 +20,6 @@
     public void IncrementStats(int totalGuesses)
     {
         TotalGuesses += totalGuesses;
-        NumberOfGames ++;
+        NumberOfGames++;
     }
 }
