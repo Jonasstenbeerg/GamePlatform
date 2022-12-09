@@ -1,22 +1,18 @@
-﻿using GamePlatform.Games;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GamePlatform.TemplateClasses;
+using GamePlatform.GamesTypes;
 
 namespace GamePlatform.Test.Games
 {
     [TestClass]
     public class MooGameTest
     {
-        private MooGame? _game;
+        private Game _game;
         
         [TestInitialize] 
         public void Initialize() 
         {
-            _game = new MooGame();
-            _game!.SetupDigitsToGuess();
+            _game = new Game(new MooType());
+            _game!.SetDigitsToGuess();
             _game.SetCurrentGuess(_game.DigitsToGuess);
         }
 
