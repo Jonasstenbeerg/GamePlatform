@@ -1,10 +1,4 @@
-﻿using GamePlatform.Interfaces;
-using GamePlatform.Test.Fakes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GamePlatform.Test.Fakes;
 
 namespace GamePlatform.Test.UIs
 {
@@ -13,14 +7,14 @@ namespace GamePlatform.Test.UIs
     {
         private ConsoleUI? _consoleIO;
         private FakeTerminator? _terminator;
-        private FakeIO? _iO; 
-        [TestInitialize] 
-        public void Init() 
+        private FakeIO? _iO;
+        [TestInitialize]
+        public void Init()
         {
             _terminator = new FakeTerminator();
             _iO = new FakeIO();
 
-            _consoleIO = new ConsoleUI(_terminator,_iO);
+            _consoleIO = new ConsoleUI(_terminator, _iO);
         }
 
         [TestMethod]
@@ -51,7 +45,7 @@ namespace GamePlatform.Test.UIs
         public void PrintString_Should_Run_HandleUserInput_With_Input_In_IO()
         {
             const string input = "Hej";
-           
+
             _consoleIO!.PrintString(input);
 
             Assert.IsTrue(_iO!.HandleUserInputRan);

@@ -1,5 +1,4 @@
 ﻿using GamePlatform.Interfaces;
-using System.Reflection.Metadata.Ecma335;
 
 namespace GamePlatform.TemplateClasses
 {
@@ -44,7 +43,6 @@ namespace GamePlatform.TemplateClasses
 
         public string GetGuessResult()
         {
-            
             string cows = "";
             string bulls = "";
 
@@ -56,11 +54,11 @@ namespace GamePlatform.TemplateClasses
                     {
                         if (i == j)
                         {
-                            bulls += 'B';           
-                        }                           
-                                                   
-                        else                       
-                        {                          
+                            bulls += 'B';
+                        }
+
+                        else
+                        {
                             cows += 'C';
                         }
                     }
@@ -74,7 +72,7 @@ namespace GamePlatform.TemplateClasses
         private string FormatResult(string result)
         {
             const int MaxLength = 5;
-           return result.Length > MaxLength ? result.Substring(0, MaxLength) : result;
+            return result.Length > MaxLength ? result.Substring(0, MaxLength) : result;
         }
     }
 }

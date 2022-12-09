@@ -9,7 +9,7 @@ namespace GamePlatform.Test.Fakes
 
         public void HandleUserInput(string input)
         {
-            HandleUserInputRan = (input != null);  
+            HandleUserInputRan = (input != null);
         }
 
         public string? ReturnUserInput()
