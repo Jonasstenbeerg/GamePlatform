@@ -1,12 +1,11 @@
 ﻿using GamePlatform.Data;
-using GamePlatform.Games;
-using GamePlatform.GamesTypes;
-using GamePlatform.Helpers;
+using GamePlatform.GameTypes;
+using GamePlatform.Tools;
 using GamePlatform.Interfaces;
 using GamePlatform.TemplateClasses;
 
 //To create a new game, add a new instance of the game in the dictionary with the given name and type of game
-Dictionary<string, Game> GameList = new Dictionary<string, Game>() { { "Moogame", new Game(new MooType()) }, { "Mastermind", new Game(new MastermindType()) } };
+Dictionary<string, Game> GameList = new Dictionary<string, Game>() { { "Moo", new Game(new MooType()) }, { "Mastermind", new Game(new MastermindType()) } };
 
 
 ITerminator terminator = new Terminator();    //For testing
