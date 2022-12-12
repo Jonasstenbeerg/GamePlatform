@@ -1,6 +1,4 @@
 ﻿using GamePlatform.Interfaces;
-using GamePlatform.Helpers;
-using GamePlatform.Tools;
 
 namespace GamePlatform.GameTypes
 {

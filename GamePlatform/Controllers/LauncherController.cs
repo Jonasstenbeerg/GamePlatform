@@ -1,5 +1,4 @@
 ﻿using GamePlatform.Data;
-using GamePlatform.GameTypes;
 using GamePlatform.Interfaces;
 using GamePlatform.TemplateClasses;
 
@@ -31,10 +30,7 @@ namespace GamePlatform.Controllers
             {
                 ui.PrintString("Please choose a game by typing the exact name of it");
 
-                foreach (var game in gameList)
-                {
-                    ui.PrintString($"{game.GameTitle}");
-                }
+                DisplayGameOptions(gameList, ui);
 
                 var input = ui.GetString();
 
@@ -50,6 +46,14 @@ namespace GamePlatform.Controllers
 
                     controller.RunGame();
                 }
+            }
+        }
+
+        private static void DisplayGameOptions(List<Game> gameList, IUI ui)
+        {
+            foreach (var game in gameList)
+            {
+                ui.PrintString($"{game.GameTitle}");
             }
         }
     }

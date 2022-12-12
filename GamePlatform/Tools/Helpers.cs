@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GamePlatform.Tools
+﻿namespace GamePlatform.Tools
 {
     public static class Helpers
     {
-        private static Random _random = new Random();
+        private static Random _random = new();
         
         public static int GetFourRandomNumbers(int numberSpan, bool isUnique = false)
         {

@@ -4,7 +4,7 @@
     int GuessCounter { get; }
     int CurrentGuess { get; }
     int DigitsToGuess { get; }
-    string? GameName { get; }
+    string? GameTitle { get; }
     public void SetCurrentGuess(int digitGuess);
     public void SetPlayerName(string? playerName);
     public void SetDigitsToGuess();
