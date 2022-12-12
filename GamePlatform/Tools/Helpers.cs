@@ -18,22 +18,22 @@ namespace GamePlatform.Tools
             return int.Parse(randomDigits);
         }
 
-        private static string GenerateUniqueNumbers(int numberspan, string currentNumbers)
+        private static string GenerateUniqueNumbers(int numberSpan, string currentNumbers)
         {
-            int random;
+            int randomNumbers;
             do
             {
-                random = _random.Next(numberspan);
-            } while (currentNumbers.Contains(random.ToString()));
+                randomNumbers = _random.Next(numberSpan);
+            } while (currentNumbers.Contains(randomNumbers.ToString()));
 
-            return random.ToString();
+            return randomNumbers.ToString();
         }
 
         public static string GuessResultToString(GuessResult guessResult)
         {
-            return $"{MultiplyGivenChar('C', guessResult.CowCounter)},{MultiplyGivenChar('B', guessResult.BullsCounter)}";
+            return $"{GetGivenCharMultiplied('C', guessResult.CowCounter)},{GetGivenCharMultiplied('B', guessResult.BullsCounter)}";
         }
-        private static string MultiplyGivenChar(char givenChar,int times)
+        private static string GetGivenCharMultiplied(char givenChar,int times)
         {
             return new string(givenChar, times);
         }

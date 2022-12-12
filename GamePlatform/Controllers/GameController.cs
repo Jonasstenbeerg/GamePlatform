@@ -1,4 +1,5 @@
 ﻿using GamePlatform.Interfaces;
+using GamePlatform.Models;
 using GamePlatform.Tools;
 
 public class GameController : IGameController
@@ -50,7 +51,7 @@ public class GameController : IGameController
 
     private void VerifyGuess()
     {
-        var result = _currentGame.GetGuessResult();
+        GuessResult result = _currentGame.GetGuessResult();
         _ui.PrintString($"{Helpers.GuessResultToString(result)}\n");
     }
 
