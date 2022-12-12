@@ -2,9 +2,9 @@
 {
     string? PlayerName { get; }
     int GuessCounter { get; }
-    string? CurrentGuess { get; }
-    string? DigitsToGuess { get; }
-    public void SetCurrentGuess(string guess);
+    int CurrentGuess { get; }
+    int DigitsToGuess { get; }
+    public void SetCurrentGuess(int digitGuess);
     public void SetPlayerName(string? playerName);
     public void SetDigitsToGuess();
     public void IncrementGuessCounter();

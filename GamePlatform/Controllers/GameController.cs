@@ -52,8 +52,17 @@ public class GameController
 
     private void MakeGuess()
     {
-        var guess = _ui.GetString();
-        HandleGuess(guess);
+        string guess = "";
+        int _result;
+        do
+        {
+            if(guess != "") _ui.PrintString("Wrong input! only numbers plx");
+           
+            guess = _ui.GetString();
+            
+        } while (!int.TryParse(guess, out _result));
+       
+        HandleGuess(_result);
     }
 
     private void CreateNewGame()
@@ -71,11 +80,11 @@ public class GameController
         _game.SetPlayerName(playerName);
     }
 
-    private void HandleGuess(string guess)
+    private void HandleGuess(int guess)
     {
         _game.IncrementGuessCounter();
         _game.SetCurrentGuess(guess);
-        if (_game.GuessCounter != 1) _ui.PrintString(guess);
+        if (_game.GuessCounter != 1) _ui.PrintString(guess.ToString());
     }
 
     private bool AskToContinue()

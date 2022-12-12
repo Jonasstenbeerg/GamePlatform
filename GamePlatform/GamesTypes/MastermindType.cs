@@ -1,20 +1,14 @@
 ﻿using GamePlatform.Interfaces;
+using GamePlatform.Helpers;
+using GamePlatform.Tools;
 
 namespace GamePlatform.Games
 {
     internal class MastermindType : IGameType
     {
-        public string ConfigureSetDigitsToGuess()
+        public int ConfigureSetDigitsToGuess()
         {
-            Random randomGenerator = new();
-            string digits = "";
-            for (int i = 0; i < 4; i++)
-            {
-                int random = randomGenerator.Next(7);
-
-                digits += random;
-            }
-            return digits;
+            return Tools.Helpers.GetFourRandomNumbers(7);
         }
     }
 }
