@@ -1,7 +1,7 @@
 ﻿using GamePlatform.Interfaces;
 using GamePlatform.Tools;
 
-public class GameController
+public class GameController : IGameController
 {
     private readonly IUI _ui;
     private readonly IDigitGuessGame _game;
@@ -47,7 +47,7 @@ public class GameController
     private void VerifyGuess()
     {
         var result = _game.GetGuessResult();
-        _ui.PrintString($"{result}\n");
+        _ui.PrintString($"{Helpers.GuessResultToString(result)}\n");
     }
 
     private void MakeGuess()
@@ -56,7 +56,7 @@ public class GameController
         int _result;
         do
         {
-            if(guess != "") _ui.PrintString("Wrong input! only numbers plx");
+            if(guess != "") _ui.PrintString("Wrong input! only numbers");
            
             guess = _ui.GetString();
             

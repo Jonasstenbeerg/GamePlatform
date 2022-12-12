@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GamePlatform.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,15 @@ namespace GamePlatform.Tools
             } while (currentNumbers.Contains(random.ToString()));
 
             return random.ToString();
+        }
+
+        public static string GuessResultToString(GuessResult guessResult)
+        {
+            return $"{MultiplyGivenChar('C', guessResult.CowCounter)},{MultiplyGivenChar('B', guessResult.BullsCounter)}";
+        }
+        private static string MultiplyGivenChar(char givenChar,int times)
+        {
+            return new string(givenChar, times);
         }
     }
 }
