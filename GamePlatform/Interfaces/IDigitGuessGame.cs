@@ -1,4 +1,6 @@
-﻿public interface IDigitGuessGame
+﻿using GamePlatform.Models;
+
+public interface IDigitGuessGame
 {
     string? PlayerName { get; }
     int GuessCounter { get; }
@@ -10,5 +12,5 @@
     public void SetDigitsToGuess();
     public void IncrementGuessCounter();
     public void ResetGuessCounter();
-    public string GetGuessResult();
+    public GuessResult GetGuessResult();
 }

@@ -1,4 +1,5 @@
-﻿namespace GamePlatform.Tools
+﻿using GamePlatform.Models
+namespace GamePlatform.Tools
 {
     public static class Helpers
     {
@@ -26,6 +27,15 @@
             } while (currentNumbers.Contains(random.ToString()));
 
             return random.ToString();
+        }
+
+        public static string GuessResultToString(GuessResult guessResult)
+        {
+            return $"{MultiplyGivenChar('C', guessResult.CowCounter)},{MultiplyGivenChar('B', guessResult.BullsCounter)}";
+        }
+        private static string MultiplyGivenChar(char givenChar,int times)
+        {
+            return new string(givenChar, times);
         }
     }
 }
