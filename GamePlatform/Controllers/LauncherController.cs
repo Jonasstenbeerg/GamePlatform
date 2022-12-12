@@ -6,45 +6,36 @@ namespace GamePlatform.Controllers
 {
     public class LauncherController
     {
-        private readonly ITerminator _terminator;
-        private readonly IIO _iOHandler;
-        private readonly IFilemanager _filemanager;
+        private readonly IGameController _gameController;
+        private readonly IUI _uI;
 
-        public LauncherController()
+        public LauncherController(IGameController gameController, IUI uI)
         {
-
+            _gameController= gameController;
+            _uI= uI;
         }
-        public LauncherController(ITerminator terminator, IIO iOHandler, IFilemanager filemanager)
-        {
-            _terminator = terminator;   //For testing
-            _iOHandler = iOHandler;     //For testing
-            _filemanager = filemanager; //For testing
-        }
+        
 
-        public void ChooseGame(List<Game> gameList)
+        public void ChooseGameFromList(List<Game> gameList)
         {
-            IUI ui = new ConsoleUI(_terminator, _iOHandler);
-            IDataAccess dataAccess = new DataAccess("scoreboard.txt", _filemanager);
 
             while (true)
             {
-                ui.PrintString("Please choose a game by typing the exact name of it");
+                _uI.PrintString("Please choose a game by typing the exact name of it");
 
-                DisplayGameOptions(gameList, ui);
+                DisplayGameOptions(gameList, _uI);
 
-                var input = ui.GetString();
+                var input = _uI.GetString();
 
                 var chosenGame = gameList.FirstOrDefault(game => game.GameTitle == input);
 
                 if (chosenGame == null)
                 {
-                    ui.PrintString("Wrong input!");
+                    _uI.PrintString("Wrong input!");
                 }
                 else
                 {
-                    GameController controller = new(ui, chosenGame, dataAccess);
-
-                    controller.RunGame();
+                    _gameController.RunGame(chosenGame);
                 }
             }
         }

@@ -4,18 +4,18 @@ using GamePlatform.Tools;
 public class GameController : IGameController
 {
     private readonly IUI _ui;
-    private readonly IDigitGuessGame _game;
+    private IDigitGuessGame _currentGame;
     private readonly IDataAccess _dataAccess;
     private bool _continueGame;
-    public GameController(IUI ui, IDigitGuessGame digitGuessGame, IDataAccess dataAccess)
+    public GameController(IUI ui, IDataAccess dataAccess)
     {
         _ui = ui;
-        _game = digitGuessGame;
         _dataAccess = dataAccess;
     }
 
-    public void RunGame()
+    public void RunGame(IDigitGuessGame game)
     {
+        SetCurrentGame(game);
         CreateNewPlayer();
 
         do
@@ -27,7 +27,7 @@ public class GameController : IGameController
                 MakeGuess();
                 VerifyGuess();
             }
-            while (_game.CurrentGuess != _game.DigitsToGuess);
+            while (_currentGame.CurrentGuess != _currentGame.DigitsToGuess);
 
             HandleSave();
             ShowAllPlayersScore();
@@ -38,6 +38,10 @@ public class GameController : IGameController
         _ui.Exit();
     }
 
+    private void SetCurrentGame(IDigitGuessGame game)
+    {
+        _currentGame = game;
+    }
     private void ShowAllPlayersScore()
     {
         var allPlayerStats = _dataAccess.GetAllPlayers();
@@ -46,7 +50,7 @@ public class GameController : IGameController
 
     private void VerifyGuess()
     {
-        var result = _game.GetGuessResult();
+        var result = _currentGame.GetGuessResult();
         _ui.PrintString($"{Helpers.GuessResultToString(result)}\n");
     }
 
@@ -67,29 +71,29 @@ public class GameController : IGameController
 
     private void CreateNewGame()
     {
-        _game.ResetGuessCounter();
-        _game.SetDigitsToGuess();
+        _currentGame.ResetGuessCounter();
+        _currentGame.SetDigitsToGuess();
         _ui.PrintString("New game:\n");
-        _ui.PrintString($"For practice, number is: {_game.DigitsToGuess}\n");
+        _ui.PrintString($"For practice, number is: {_currentGame.DigitsToGuess}\n");
     }
 
     private void CreateNewPlayer()
     {
         _ui.PrintString("Enter your username: \n");
         var playerName = _ui.GetString();
-        _game.SetPlayerName(playerName);
+        _currentGame.SetPlayerName(playerName);
     }
 
     private void HandleGuess(int guess)
     {
-        _game.IncrementGuessCounter();
-        _game.SetCurrentGuess(guess);
-        if (_game.GuessCounter != 1) _ui.PrintString(guess.ToString());
+        _currentGame.IncrementGuessCounter();
+        _currentGame.SetCurrentGuess(guess);
+        if (_currentGame.GuessCounter != 1) _ui.PrintString(guess.ToString());
     }
 
     private bool AskToContinue()
     {
-        _ui.PrintString($"\nCorrect, it took {_game.GuessCounter} guesses\nContinue?");
+        _ui.PrintString($"\nCorrect, it took {_currentGame.GuessCounter} guesses\nContinue?");
         return _ui.GetString()[0] != 'n';
     }
 
@@ -111,8 +115,8 @@ public class GameController : IGameController
     {
         var currentPlayer = new Player()
         {
-            Name = _game.PlayerName,
-            TotalGuesses = _game.GuessCounter,
+            Name = _currentGame.PlayerName,
+            TotalGuesses = _currentGame.GuessCounter,
 
         };
 

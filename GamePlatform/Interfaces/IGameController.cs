@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GamePlatform.Interfaces
 {
-    internal interface IGameController
+    public interface IGameController
     {
-        public void RunGame();
+        public void RunGame(IDigitGuessGame game);
     }
 }

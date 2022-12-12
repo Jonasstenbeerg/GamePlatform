@@ -1,5 +1,4 @@
 ﻿using GamePlatform.Interfaces;
-using GamePlatform.Helpers;
 using GamePlatform.Tools;
 using GamePlatform.Models;
 
@@ -20,7 +19,7 @@ namespace GamePlatform.GameTypes
 
         public int ConfigureSetDigitsToGuess()
         {
-            return Tools.Helpers.GetFourRandomNumbers(7);
+            return Helpers.GetFourRandomNumbers(7);
         }
     }
 }

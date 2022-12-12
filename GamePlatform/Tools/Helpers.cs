@@ -1,4 +1,4 @@
-﻿using GamePlatform.Models
+﻿using GamePlatform.Models;
 namespace GamePlatform.Tools
 {
     public static class Helpers
