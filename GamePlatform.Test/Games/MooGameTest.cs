@@ -93,7 +93,7 @@ namespace GamePlatform.Test.Games
         [TestMethod]
         public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_A_String()
         {
-            _game!.SetupDigitsToGuess();
+            _game!.SetDigitsToGuess();
 
             Assert.IsInstanceOfType(_game.DigitsToGuess, typeof(string));
 
@@ -102,7 +102,7 @@ namespace GamePlatform.Test.Games
         [TestMethod]
         public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_Be_Four_In_Length()
         {
-            _game!.SetupDigitsToGuess();
+            _game!.SetDigitsToGuess();
 
             var expected = 4;
 
@@ -114,7 +114,7 @@ namespace GamePlatform.Test.Games
         [TestMethod]
         public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_Only_Be_Digits()
         {
-            _game!.SetupDigitsToGuess();
+            _game!.SetDigitsToGuess();
 
             foreach (var number in _game.DigitsToGuess!)
             {
@@ -128,7 +128,7 @@ namespace GamePlatform.Test.Games
         [TestMethod]
         public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_Unique_Characters()
         {
-            _game!.SetupDigitsToGuess();
+            _game!.SetDigitsToGuess();
 
             bool[] array = new bool[100];
 

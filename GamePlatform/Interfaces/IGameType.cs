@@ -2,6 +2,6 @@
 {
     public interface IGameType
     {
-        public string ConfigureSetDigitsToGuess();
+        public int ConfigureSetDigitsToGuess();
     }
 }
