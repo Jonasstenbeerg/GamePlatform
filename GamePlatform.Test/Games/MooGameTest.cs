@@ -11,7 +11,7 @@ namespace GamePlatform.Test.Games
         [TestInitialize]
         public void Initialize()
         {
-            _game = new Game(new MooType());
+            _game = new Game(new MooType(), "Moo");
             _game!.SetDigitsToGuess();
             _game.SetCurrentGuess(_game.DigitsToGuess);
         }
