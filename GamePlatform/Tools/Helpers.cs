@@ -31,7 +31,7 @@ namespace GamePlatform.Tools
 
         public static string GuessResultToString(GuessResult guessResult)
         {
-            return $"{GetGivenCharMultiplied('C', guessResult.CowCounter)},{GetGivenCharMultiplied('B', guessResult.BullsCounter)}";
+            return $"{GetGivenCharMultiplied('B', guessResult.BullsCounter)},{GetGivenCharMultiplied('C', guessResult.CowCounter)}";
         }
         private static string GetGivenCharMultiplied(char givenChar,int times)
         {
