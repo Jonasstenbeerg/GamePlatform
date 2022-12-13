@@ -4,10 +4,10 @@ public interface IDigitGuessGame
 {
     string? PlayerName { get; }
     int GuessCounter { get; }
-    int CurrentGuess { get; }
-    int DigitsToGuess { get; }
+    string? CurrentGuess { get; }
+    string? DigitsToGuess { get; }
     string? GameTitle { get; }
-    public void SetCurrentGuess(int digitGuess);
+    public void SetCurrentGuess(string? guess);
     public void SetPlayerName(string? playerName);
     public void SetDigitsToGuess();
     public void IncrementGuessCounter();
