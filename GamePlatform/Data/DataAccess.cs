@@ -22,7 +22,7 @@ namespace GamePlatform.Data
                 while (!reader.EndOfStream)
                 {
                     string line = reader.ReadLine()!;
-                    Player player = PlayerExtensions.ParsePlayerDataFromString(line);
+                    Player player = PlayerExtensions.ParsePlayerDataFromString(line,_separator);
                     players.Add(player);
                 }
             }

@@ -22,9 +22,9 @@
             return distinctPlayers;
         }
 
-        internal static Player ParsePlayerDataFromString(string line)
+        internal static Player ParsePlayerDataFromString(string line,string separator)
         {
-            string[] playerStats = line.Split(_separator);
+            string[] playerStats = line.Split(separator);
 
             Player player = new Player()
             {
