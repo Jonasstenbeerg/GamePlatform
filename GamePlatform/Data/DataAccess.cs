@@ -1,4 +1,5 @@
 ﻿using GamePlatform.Interfaces;
+using GamePlatform.Tools;
 
 namespace GamePlatform.Data
 {
@@ -21,24 +22,11 @@ namespace GamePlatform.Data
                 while (!reader.EndOfStream)
                 {
                     string line = reader.ReadLine()!;
-                    Player player = ParsePlayerDataFromString(line);
+                    Player player = PlayerExtensions.ParsePlayerDataFromString(line);
                     players.Add(player);
                 }
             }
             return players;
-        }
-
-        private Player ParsePlayerDataFromString(string line)
-        {
-            string[] playerStats = line.Split(_separator);
-
-            Player player = new Player()
-            {
-                Name = playerStats[0],
-                TotalGuesses = int.Parse(playerStats[1])
-
-            };
-            return player;
         }
 
         public void SavePlayer(Player player)

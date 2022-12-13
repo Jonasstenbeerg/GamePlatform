@@ -21,5 +21,18 @@
 
             return distinctPlayers;
         }
+
+        internal static Player ParsePlayerDataFromString(string line)
+        {
+            string[] playerStats = line.Split(_separator);
+
+            Player player = new Player()
+            {
+                Name = playerStats[0],
+                TotalGuesses = int.Parse(playerStats[1])
+
+            };
+            return player;
+        }
     }
 }
