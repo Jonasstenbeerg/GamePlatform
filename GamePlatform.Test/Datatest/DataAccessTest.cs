@@ -3,20 +3,13 @@ using GamePlatform.Interfaces;
 using Moq;
 using System.Text;
 
-namespace GamePlatform.Test.NewFolder
+namespace GamePlatform.Test.Datatest
 {
     [TestClass]
     public class DataAccessTest
     {
 
-        DataAccess _dataAccess;
-
-        [TestInitialize]
-        public void Initialize()
-        {
-
-
-        }
+        DataAccess? _dataAccess;
 
         [TestMethod]
         public void GetAllPlayers_Should_return_A_List_Containing_Players_Matching_TextFile_Lines()

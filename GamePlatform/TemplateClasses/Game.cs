@@ -51,9 +51,9 @@ namespace GamePlatform.TemplateClasses
 
             for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < CurrentGuess.ToString().Length; j++)
+                for (int j = 0; j < CurrentGuess!.Length; j++)
                 {
-                    if (DigitsToGuess.ToString()[i] == CurrentGuess.ToString()[j])
+                    if (DigitsToGuess![i] == CurrentGuess[j])
                     {
                         if (i == j)
                         {

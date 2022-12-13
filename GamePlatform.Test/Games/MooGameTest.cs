@@ -1,20 +1,17 @@
-﻿using GamePlatform.GamesTypes;
+﻿using GamePlatform.GameTypes;
+using GamePlatform.Interfaces;
+using GamePlatform.Models;
 using GamePlatform.TemplateClasses;
+using GamePlatform.Test.Fakes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace GamePlatform.Test.Games
 {
     [TestClass]
     public class MooGameTest
     {
-        private Game _game;
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            _game = new Game(new MooType(), "Moo");
-            _game!.SetDigitsToGuess();
-            _game.SetCurrentGuess(_game.DigitsToGuess);
-        }
+        private static Game _game = new Game(new MooType(), "Moo");
 
         [TestMethod]
         public void SetPlayerName_Should_Change_PlayerName_Equal_To_Input()
@@ -42,7 +39,7 @@ namespace GamePlatform.Test.Games
             }
         }
         [TestMethod]
-        public void SetCurrentGuess_Should_Change_PlayerName_Equal_To_Input()
+        public void SetCurrentGuess_Should_Change_CurrentGuess_Equal_To_Input()
         {
             const string GuessToMake = "1234";
             _game!.SetCurrentGuess(GuessToMake);
@@ -54,16 +51,38 @@ namespace GamePlatform.Test.Games
             Assert.AreEqual(expected, actual);
 
         }
+
         [TestMethod]
-        public void GetGuessResult_Should_Return_BBBB_On_Correct_Guess()
+        [DataRow(4, 0, "3456")]
+        [DataRow(0, 2, "5578")]
+        [DataRow(0, 3, "4035")]
+        [DataRow(2, 2, "3443")]
+        public void GetGuessResult_Should_Return_Correct_GuessResult_After_Given_Guess(int bulls, int cows, string guess)
         {
-            var actual = _game!.GetGuessResult();
+            const string digitsToGuess = "3456";
+            Game testGame = new Game(new FakeMooType(digitsToGuess), "MooTest");
+            testGame.SetDigitsToGuess();
+            testGame.SetCurrentGuess(guess);
 
-            var expected = "BBBB,";
+            GuessResult actual = testGame.GetGuessResult();
+            GuessResult expected = new GuessResult(cows, bulls);
 
+            Assert.AreEqual(actual.CowCounter, expected.CowCounter);
+            Assert.AreEqual(actual.BullsCounter, expected.BullsCounter);
+        }
+
+        [TestMethod]
+        [DataRow(1, 3, "B,CCC")]
+        [DataRow(0, 2, ",CC")]
+        [DataRow(0, 4, ",CCCC")]
+        [DataRow(4, 0, "BBBB,")]
+        [DataRow(1, 1, "B,C")]
+        public void GuessResult_To_String_Should_Return_Correct_String(int bulls, int cows, string expected)
+        {
+            GuessResult result = new GuessResult(cows, bulls);
+            string actual = result.ToString();
 
             Assert.AreEqual(expected, actual);
-
         }
 
         [TestMethod]
@@ -72,7 +91,6 @@ namespace GamePlatform.Test.Games
             _game!.IncrementGuessCounter();
 
             var expected = 1;
-
             var actual = _game.GuessCounter;
 
             Assert.AreEqual(expected, actual);
@@ -84,7 +102,6 @@ namespace GamePlatform.Test.Games
             _game!.ResetGuessCounter();
 
             var expected = 0;
-
             var actual = _game.GuessCounter;
 
             Assert.AreEqual(expected, actual);
@@ -105,7 +122,6 @@ namespace GamePlatform.Test.Games
             _game!.SetDigitsToGuess();
 
             var expected = 4;
-
             var actual = _game.DigitsToGuess!.Length;
 
             Assert.AreEqual(expected, actual);
