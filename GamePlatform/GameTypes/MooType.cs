@@ -1,18 +1,20 @@
 ﻿using GamePlatform.Interfaces;
 using GamePlatform.Models;
+using GamePlatform.Tools;
 
 namespace GamePlatform.GameTypes
 {
     internal class MooType : IGameType
     {
+        private NumberGenerator _numberGenerator = new(10, true);
         public GuessResult ConfigureFormatGuessResult(GuessResult result)
         {
             return result;
         }
 
-        public int ConfigureSetDigitsToGuess()
+        public string ConfigureSetDigitsToGuess()
         {
-            return Tools.Helpers.GetFourRandomNumbers(7, true);
+            return _numberGenerator.GetFourRandomNumbers();
         }
     }
 }

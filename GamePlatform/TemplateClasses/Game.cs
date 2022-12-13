@@ -8,8 +8,8 @@ namespace GamePlatform.TemplateClasses
         public int GuessCounter { get; private set; }
         public string GameTitle { get; private set; }
         public string? PlayerName { get; private set; }
-        public int CurrentGuess { get; private set; }
-        public int DigitsToGuess { get; private set; }
+        public string? CurrentGuess { get; private set; }
+        public string? DigitsToGuess { get; private set; }
 
         private IGameType _gameType;
 
@@ -24,9 +24,9 @@ namespace GamePlatform.TemplateClasses
             PlayerName = playerName!.Trim();
         }
 
-        public void SetCurrentGuess(int digitGuess)
+        public void SetCurrentGuess(string? guess)
         {
-            CurrentGuess = digitGuess;
+            CurrentGuess = guess;
         }
 
         public void SetDigitsToGuess()
