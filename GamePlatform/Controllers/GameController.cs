@@ -95,15 +95,19 @@ namespace GamePlatform.Controllers
 
         private void GeneratePlayersResult(List<Player> players)
         {
-            _ui.PrintString("Player   games average");
-            List<Player> distinctPlayers = players.GetDistinctPlayers();
+            _ui.PrintString("Player   Rounds  Average  Game");
+            List<Player> distinctPlayers = players.GetDistinctPlayersForEachGame();
 
             foreach (var player in distinctPlayers.OrderBy(player => player.AverageGuesses))
             {
-                _ui.PrintString(string.Format("{0,-9}{1,5:D}{2,9:F2}",
+                int gameTitleSpacing = 5 + player.CurrentGameTitle.Length;
+
+                _ui.PrintString(string.Format($"{{0,-9}}{{1,-1:D}}{{2,11:F2}}{{3,{gameTitleSpacing}}}",
                    player.Name,
                    player.NumberOfGames,
-                   player.AverageGuesses));
+                   player.AverageGuesses,
+                   player.CurrentGameTitle
+                   ));
             }
         }
 
@@ -113,6 +117,7 @@ namespace GamePlatform.Controllers
             {
                 Name = _currentGame!.PlayerName,
                 TotalGuesses = _currentGame.GuessCounter,
+                CurrentGameTitle = _currentGame.GameTitle!
 
             };
 

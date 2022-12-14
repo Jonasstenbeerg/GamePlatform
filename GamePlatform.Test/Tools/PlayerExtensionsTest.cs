@@ -14,7 +14,7 @@ namespace GamePlatform.Test.Controllers
             list.Add(new Player("Madde", 4));
 
             int expectedPlayersTotal = 2;
-            var actualDistinctPlayers = list.GetDistinctPlayers();
+            var actualDistinctPlayers = list.GetDistinctPlayersForEachGame();
             Assert.AreEqual(expectedPlayersTotal, actualDistinctPlayers.Count());
         }
     }
