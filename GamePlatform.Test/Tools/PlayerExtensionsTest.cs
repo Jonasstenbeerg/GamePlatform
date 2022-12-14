@@ -17,5 +17,38 @@ namespace GamePlatform.Test.Controllers
             var actualDistinctPlayers = list.GetDistinctPlayers();
             Assert.AreEqual(expectedPlayersTotal, actualDistinctPlayers.Count());
         }
+
+        [TestMethod]
+        [DataRow("Svante#&#5#&#Moo")]
+        public void ParsePlayerDataFromString_Should_Return_Name_From_Parsed_String(string playerData)
+        {
+            Player player = PlayerExtensions.ParsePlayerDataFromString(playerData, "#&#");
+            string expected = player.Name!;
+            string actual = "Svante";
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [DataRow("Svante#&#5#&#Moo")]
+        public void ParsePlayerDataFromString_Should_Return_Number_Of_Guesses_From_Parsed_String(string playerData)
+        {
+            Player player = PlayerExtensions.ParsePlayerDataFromString(playerData, "#&#");
+            int expected = player.TotalGuesses;
+            int actual = 5;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [DataRow("Svante#&#5#&#Moo")]
+        public void ParsePlayerDataFromString_Should_Return_Game_Title_From_Parsed_String(string playerData)
+        {
+            Player player = PlayerExtensions.ParsePlayerDataFromString(playerData, "#&#");
+            string expected = player.CurrentGameTitle;
+            string actual = "Moo";
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
