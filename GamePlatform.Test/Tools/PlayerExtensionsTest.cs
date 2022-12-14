@@ -8,14 +8,18 @@ namespace GamePlatform.Test.Controllers
         [TestMethod()]
         public void GetDistinctPlayers_Should_Return_List_Of_Distinct_Players()
         {
-            List<Player> list = new List<Player>();
-            list.Add(new Player("Madde", 5));
-            list.Add(new Player("Jonas", 2));
-            list.Add(new Player("Madde", 4));
+            List<Player> players = new()
+            {
+                new Player() { Name = "Madde", NumberOfGames = 2, TotalGuesses = 5, CurrentGameTitle = "Moo"},
+                new Player() { Name = "Jonas", NumberOfGames = 7, TotalGuesses = 2, CurrentGameTitle = "Mastermind"},
+                new Player() { Name = "Madde", NumberOfGames = 4, TotalGuesses = 4, CurrentGameTitle = "Moo" }
+            };
+            
+            var result = players.GetDistinctPlayersForEachGame();
+            int actual = result.Count();
+            int expected = 2;
 
-            int expectedPlayersTotal = 2;
-            var actualDistinctPlayers = list.GetDistinctPlayersForEachGame();
-            Assert.AreEqual(expectedPlayersTotal, actualDistinctPlayers.Count());
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]

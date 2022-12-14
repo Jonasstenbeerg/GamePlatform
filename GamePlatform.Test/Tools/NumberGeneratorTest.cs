@@ -1,18 +1,22 @@
-﻿namespace GamePlatform.Test.Tools
+﻿using GamePlatform.Tools;
+
+namespace GamePlatform.Test.Tools
 {
     [TestClass()]
     public class NumberGeneratorTest
     {
-        [TestMethod()]
-        public void GetFourRandomNumbers_Should_Return_Random_Numbers()
-        {
-
-        }
+        NumberGenerator numberGenerator = new(9, true);
 
         [TestMethod()]
-        public void GenerateUniqueNumbers_Should_Return_Unique_Numbers()
+        public void GetFourRandomNumbers_Should_Return_Four_Numbers()
         {
+            string result = numberGenerator.GetFourRandomNumbers();
 
+            int actual = result.Length;
+            int expected = 4;
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }
+
