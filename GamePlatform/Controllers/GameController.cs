@@ -29,9 +29,9 @@ namespace GamePlatform.Controllers
                 do
                 {
                     MakeGuess();
-                    VerifyGuess();
+                    ViewGuessResult();
                 }
-                while (_currentGame!.CurrentGuess != _currentGame.DigitsToGuess);
+                while (_currentGame!.GetGuessResult().BullsCounter < 4);
 
                 HandleSave();
                 ShowAllPlayersScore();
@@ -52,7 +52,7 @@ namespace GamePlatform.Controllers
             GeneratePlayersResult(allPlayerStats);
         }
 
-        private void VerifyGuess()
+        private void ViewGuessResult()
         {
             GuessResult result = _currentGame!.GetGuessResult();
             _ui.PrintString($"{result}\n");
