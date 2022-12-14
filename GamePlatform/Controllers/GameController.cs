@@ -67,7 +67,7 @@ namespace GamePlatform.Controllers
 
         private void CreateNewGame()
         {
-            _currentGame.ResetGuessCounter();
+            _currentGame!.ResetGuessCounter();
             _currentGame.SetDigitsToGuess();
             _ui.PrintString("New game:\n");
             _ui.PrintString($"For practice, number is: {_currentGame.DigitsToGuess}\n");
@@ -77,19 +77,19 @@ namespace GamePlatform.Controllers
         {
             _ui.PrintString("Enter your username: \n");
             var playerName = _ui.GetString();
-            _currentGame.SetPlayerName(playerName);
+            _currentGame!.SetPlayerName(playerName);
         }
 
         private void HandleGuess(string guess)
         {
-            _currentGame.IncrementGuessCounter();
+            _currentGame!.IncrementGuessCounter();
             _currentGame.SetCurrentGuess(guess);
             if (_currentGame.GuessCounter != 1) _ui.PrintString(guess.ToString());
         }
 
         private bool AskToContinue()
         {
-            _ui.PrintString($"\nCorrect, it took {_currentGame.GuessCounter} guesses\nContinue?");
+            _ui.PrintString($"\nCorrect, it took {_currentGame!.GuessCounter} guesses\nContinue?");
             return _ui.GetString()[0] != 'n';
         }
 
@@ -111,7 +111,7 @@ namespace GamePlatform.Controllers
         {
             var currentPlayer = new Player()
             {
-                Name = _currentGame.PlayerName,
+                Name = _currentGame!.PlayerName,
                 TotalGuesses = _currentGame.GuessCounter,
 
             };
