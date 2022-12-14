@@ -48,7 +48,7 @@ namespace GamePlatform.Controllers
         }
         private void ShowAllPlayersScore()
         {
-            var allPlayerStats = _dataAccess.GetAllPlayers();
+            List<Player> allPlayerStats = _dataAccess.GetAllPlayers();
             GeneratePlayersResult(allPlayerStats);
         }
 
@@ -76,7 +76,7 @@ namespace GamePlatform.Controllers
         private void CreateNewPlayer()
         {
             _ui.PrintString("Enter your username: \n");
-            var playerName = _ui.GetString();
+            string playerName = _ui.GetString();
             _currentGame!.SetPlayerName(playerName);
         }
 
@@ -109,7 +109,7 @@ namespace GamePlatform.Controllers
 
         private void HandleSave()
         {
-            var currentPlayer = new Player()
+            Player currentPlayer = new Player()
             {
                 Name = _currentGame!.PlayerName,
                 TotalGuesses = _currentGame.GuessCounter,
