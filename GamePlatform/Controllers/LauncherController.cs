@@ -14,33 +14,38 @@ namespace GamePlatform.Controllers
             _uI = uI;
         }
 
-        public void ChooseGameFromList(List<Game> games)
+        public void ChooseGameFromList(List<IDigitGuessGame> games)
         {
             while (true)
             {
                 _uI.PrintString("Please choose a game by typing the exact name of it.");
                 DisplayGameOptions(games, _uI);
                 var input = _uI.GetString();
-                var chosenGame = games.FirstOrDefault(game => game.GameTitle == input);
+                var chosenGame = games.FirstOrDefault(game => game.Title == input);
 
-                if (chosenGame == null)
-                {
-                    _uI.Clear();
-                    _uI.PrintString("Input didn't match any games, please try again!\n");
-                }
-                else
-                {
-                    _uI.Clear();
-                    _gameController.RunGame(chosenGame);
-                }
+                HandleChosenGame(chosenGame);
             }
         }
 
-        private static void DisplayGameOptions(List<Game> games, IUI ui)
+        private void HandleChosenGame(IDigitGuessGame? chosenGame)
+        {
+            if (chosenGame == null)
+            {
+                _uI.Clear();
+                _uI.PrintString("Input didn't match any games, please try again!\n");
+            }
+            else
+            {
+                _uI.Clear();
+                _gameController.RunGame(chosenGame);
+            }
+        }
+
+        private void DisplayGameOptions(List<IDigitGuessGame> games, IUI ui)
         {
             foreach (var game in games)
             {
-                ui.PrintString($"{game.GameTitle}");
+                ui.PrintString($"{game.Title}");
             }
         }
     }

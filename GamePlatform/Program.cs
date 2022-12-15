@@ -5,7 +5,7 @@ using GamePlatform.Interfaces;
 using GamePlatform.TemplateClasses;
 using GamePlatform.Tools;
 
-List<Game> games = new()
+List<IDigitGuessGame> games = new()
 {
     new Game(new MooType(), "Moo"),
     new Game(new MastermindType(), "Mastermind")

@@ -6,17 +6,17 @@ namespace GamePlatform.TemplateClasses
     public class Game : IDigitGuessGame
     {
         public int GuessCounter { get; private set; }
-        public string GameTitle { get; private set; }
+        public string Title { get; private set; }
         public string? PlayerName { get; private set; }
         public string? CurrentGuess { get; private set; }
         public string? DigitsToGuess { get; private set; }
 
-        private IGameType _gameType;
+        private readonly IGameType _gameType;
 
-        public Game(IGameType gameType, string gameTitle)
+        public Game(IGameType gameType, string title)
         {
             _gameType = gameType;
-            GameTitle = gameTitle;
+            Title = title;
         }
 
         public void SetPlayerName(string? playerName)

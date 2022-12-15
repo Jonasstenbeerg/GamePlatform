@@ -1,4 +1,5 @@
-﻿using GamePlatform.Tools;
+﻿using GamePlatform.Models;
+using GamePlatform.Tools;
 
 namespace GamePlatform.Test.Controllers
 {

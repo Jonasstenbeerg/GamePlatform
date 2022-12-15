@@ -1,5 +1,6 @@
 ﻿using GamePlatform.Data;
 using GamePlatform.Interfaces;
+using GamePlatform.Models;
 using Moq;
 using System.Text;
 
@@ -20,7 +21,7 @@ namespace GamePlatform.Test.Datatest
             using (MemoryStream testMemoryStream = new MemoryStream(testBytes))
             using (StreamReader testStreamReader = new StreamReader(testMemoryStream))
             {
-                filemangaerMock.Setup(m => m.StreamReader(It.IsAny<string>()))
+                filemangaerMock.Setup(m => m.GetStreamReader(It.IsAny<string>()))
                 .Returns(() => testStreamReader);
                 _dataAccess = new DataAccess("test.txt", filemangaerMock.Object);
 
@@ -43,7 +44,7 @@ namespace GamePlatform.Test.Datatest
             {
                 // arrange
                 var mockFilemanager = new Mock<IFileManager>();
-                mockFilemanager.Setup(m => m.StreamWriter(It.IsAny<string>()))
+                mockFilemanager.Setup(m => m.GetStreamWriter(It.IsAny<string>()))
                     .Returns(() => writer);
                 _dataAccess = new DataAccess("Test.txt", mockFilemanager.Object);
 

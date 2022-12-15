@@ -4,14 +4,14 @@ namespace GamePlatform.Data
 {
     internal class FileManager : IFileManager
     {
-        public StreamReader StreamReader(string path)
+        public StreamReader GetStreamReader(string filePath)
         {
-            return new StreamReader(path);
+            return new StreamReader(filePath);
         }
 
-        public StreamWriter StreamWriter(string path)
+        public StreamWriter GetStreamWriter(string filePath)
         {
-            return new StreamWriter(path, append: true);
+            return new StreamWriter(filePath, append: true);
         }
     }
 }

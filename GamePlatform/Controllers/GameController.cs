@@ -19,6 +19,7 @@ namespace GamePlatform.Controllers
 
         public void RunGame(IDigitGuessGame game)
         {
+            const int numberOfBullsToWin = 4;
             SetCurrentGame(game);
             CreateNewPlayer();
 
@@ -29,9 +30,9 @@ namespace GamePlatform.Controllers
                 do
                 {
                     MakeGuess();
-                    ViewGuessResult();
+                    ShowGuessResult();
                 }
-                while (_currentGame!.GetGuessResult().BullsCounter < 4);
+                while (_currentGame!.GetGuessResult().BullsCounter < numberOfBullsToWin);
 
                 HandleSave();
                 ShowAllPlayersScore();
@@ -46,13 +47,14 @@ namespace GamePlatform.Controllers
         {
             _currentGame = game;
         }
+
         private void ShowAllPlayersScore()
         {
             List<Player> allPlayerStats = _dataAccess.GetAllPlayers();
-            GeneratePlayersResult(allPlayerStats);
+            GeneratePlayersScore(allPlayerStats);
         }
 
-        private void ViewGuessResult()
+        private void ShowGuessResult()
         {
             GuessResult result = _currentGame!.GetGuessResult();
             _ui.PrintString($"{result}\n");
@@ -84,23 +86,25 @@ namespace GamePlatform.Controllers
         {
             _currentGame!.IncrementGuessCounter();
             _currentGame.SetCurrentGuess(guess);
-            if (_currentGame.GuessCounter != 1) _ui.PrintString(guess.ToString());
+            bool notFirstGuess = _currentGame!.GuessCounter != 1;
+            if (notFirstGuess) _ui.PrintString(guess);
         }
 
         private bool AskToContinue()
         {
             _ui.PrintString($"\nCorrect, it took {_currentGame!.GuessCounter} guesses\nContinue?");
-            return _ui.GetString()[0] != 'n';
+            bool wantsToContinue = _ui.GetString().FirstOrDefault() != 'n';
+            return wantsToContinue;
         }
 
-        private void GeneratePlayersResult(List<Player> players)
+        private void GeneratePlayersScore(List<Player> players)
         {
             _ui.PrintString("Player   Rounds  Average  Game");
-            List<Player> distinctPlayers = players.GetDistinctPlayersForEachGame();
+            List<Player> distinctPlayersByGame = players.GetDistinctPlayersForEachGame();
 
-            foreach (var player in distinctPlayers.OrderBy(player => player.AverageGuesses))
+            foreach (var player in distinctPlayersByGame.OrderBy(player => player.AverageGuesses))
             {
-                int gameTitleSpacing = 5 + player.CurrentGameTitle.Length;
+                int gameTitleSpacing = 5 + player.CurrentGameTitle!.Length;
 
                 _ui.PrintString(string.Format($"{{0,-9}}{{1,-1:D}}{{2,11:F2}}{{3,{gameTitleSpacing}}}",
                    player.Name,
@@ -113,12 +117,11 @@ namespace GamePlatform.Controllers
 
         private void HandleSave()
         {
-            Player currentPlayer = new Player()
+            Player currentPlayer = new()
             {
                 Name = _currentGame!.PlayerName,
                 TotalGuesses = _currentGame.GuessCounter,
-                CurrentGameTitle = _currentGame.GameTitle!
-
+                CurrentGameTitle = _currentGame.Title!
             };
 
             _dataAccess.SavePlayer(currentPlayer);
