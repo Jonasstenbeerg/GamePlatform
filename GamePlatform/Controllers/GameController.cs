@@ -10,6 +10,7 @@ namespace GamePlatform.Controllers
         private IDigitGuessGame? _currentGame;
         private readonly IDataAccess _dataAccess;
         private bool _continueGame;
+
         public GameController(IUI ui, IDataAccess dataAccess)
         {
             _ui = ui;
@@ -98,7 +99,7 @@ namespace GamePlatform.Controllers
 
             foreach (var player in distinctPlayers.OrderBy(player => player.AverageGuesses))
             {
-                int gameTitleSpacing = 5 + player.CurrentGameTitle!.Length;
+                int gameTitleSpacing = 5 + player.CurrentGameTitle.Length;
 
                 _ui.PrintString(string.Format($"{{0,-9}}{{1,-1:D}}{{2,11:F2}}{{3,{gameTitleSpacing}}}",
                    player.Name,

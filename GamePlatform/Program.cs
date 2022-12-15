@@ -21,15 +21,3 @@ IGameController gameController = new GameController(uI, dataAccess);
 
 LauncherController launcher = new(gameController, uI);
 launcher.ChooseGameFromList(gameList);
-
-
-
-
-
-
-
-
-
-
-
-

@@ -133,7 +133,6 @@ namespace GamePlatform.Test.Games
                     Assert.Fail("Letter found in string that should contain only digits");
                 }
             }
-
         }
 
         [TestMethod]
