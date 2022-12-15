@@ -13,7 +13,7 @@ namespace GamePlatform.Test.Datatest
         [TestMethod]
         public void GetAllPlayers_Should_return_A_List_Containing_Players_Matching_TextFile_Lines()
         {
-            Mock<IFilemanager> filemangaerMock = new Mock<IFilemanager>();
+            Mock<IFileManager> filemangaerMock = new Mock<IFileManager>();
             string testContent = "sven#&#4#&#moo\nJohannes#&#1#&#mastermind";
             byte[] testBytes = Encoding.UTF8.GetBytes(testContent);
 
@@ -42,7 +42,7 @@ namespace GamePlatform.Test.Datatest
             using (var writer = new StreamWriter(stream))
             {
                 // arrange
-                var mockFilemanager = new Mock<IFilemanager>();
+                var mockFilemanager = new Mock<IFileManager>();
                 mockFilemanager.Setup(m => m.StreamWriter(It.IsAny<string>()))
                     .Returns(() => writer);
                 _dataAccess = new DataAccess("Test.txt", mockFilemanager.Object);

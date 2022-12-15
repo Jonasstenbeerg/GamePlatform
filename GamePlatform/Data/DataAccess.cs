@@ -7,9 +7,9 @@ namespace GamePlatform.Data
     {
         private string _filePath;
         private const string _separator = "#&#";
-        private IFilemanager _fileManager;
+        private IFileManager _fileManager;
 
-        public DataAccess(string filePath, IFilemanager filemanager)
+        public DataAccess(string filePath, IFileManager filemanager)
         {
             _filePath = filePath;
             _fileManager = filemanager;

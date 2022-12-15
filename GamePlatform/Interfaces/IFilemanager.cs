@@ -1,6 +1,6 @@
 ﻿namespace GamePlatform.Interfaces
 {
-    public interface IFilemanager
+    public interface IFileManager
     {
         StreamReader StreamReader(string path);
         StreamWriter StreamWriter(string path);

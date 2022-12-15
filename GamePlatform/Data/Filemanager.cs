@@ -2,7 +2,7 @@
 
 namespace GamePlatform.Data
 {
-    internal class Filemanager : IFilemanager
+    internal class FileManager : IFileManager
     {
         public StreamReader StreamReader(string path)
         {

@@ -69,6 +69,7 @@ namespace GamePlatform.Controllers
             _currentGame!.ResetGuessCounter();
             _currentGame.SetDigitsToGuess();
             _ui.PrintString("New game:\n");
+            //Comment out or remove next line to play real games!
             _ui.PrintString($"For practice, number is: {_currentGame.DigitsToGuess}\n");
         }
 

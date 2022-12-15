@@ -13,7 +13,7 @@ List<Game> games = new()
 
 ITerminator terminator = new Terminator();      //For unit testing
 IIO iO = new IO();                              //For unit testing
-IFilemanager filemanager = new Filemanager();   //For unit testing
+IFileManager filemanager = new FileManager();   //For unit testing
 
 IUI uI = new ConsoleUI(terminator, iO);
 IDataAccess dataAccess = new DataAccess("scoreboard.txt", filemanager);
