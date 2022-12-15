@@ -1,6 +1,5 @@
 ﻿using GamePlatform.Interfaces;
 using GamePlatform.TemplateClasses;
-using GamePlatform.Tools;
 
 namespace GamePlatform.Controllers
 {
@@ -15,14 +14,14 @@ namespace GamePlatform.Controllers
             _uI = uI;
         }
 
-        public void ChooseGameFromList(List<Game> gameList)
+        public void ChooseGameFromList(List<Game> games)
         {
             while (true)
             {
                 _uI.PrintString("Please choose a game by typing the exact name of it.");
-                DisplayGameOptions(gameList, _uI);
+                DisplayGameOptions(games, _uI);
                 var input = _uI.GetString();
-                var chosenGame = gameList.FirstOrDefault(game => game.GameTitle == input);
+                var chosenGame = games.FirstOrDefault(game => game.GameTitle == input);
 
                 if (chosenGame == null)
                 {
@@ -37,9 +36,9 @@ namespace GamePlatform.Controllers
             }
         }
 
-        private static void DisplayGameOptions(List<Game> gameList, IUI ui)
+        private static void DisplayGameOptions(List<Game> games, IUI ui)
         {
-            foreach (var game in gameList)
+            foreach (var game in games)
             {
                 ui.PrintString($"{game.GameTitle}");
             }

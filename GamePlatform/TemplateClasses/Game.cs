@@ -59,7 +59,6 @@ namespace GamePlatform.TemplateClasses
                         {
                             bulls++;
                         }
-
                         else
                         {
                             cows++;
