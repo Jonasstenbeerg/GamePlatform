@@ -1,5 +1,4 @@
-﻿using GamePlatform.Data;
-using GamePlatform.Interfaces;
+﻿using GamePlatform.Interfaces;
 using GamePlatform.TemplateClasses;
 
 namespace GamePlatform.Controllers
@@ -11,22 +10,17 @@ namespace GamePlatform.Controllers
 
         public LauncherController(IGameController gameController, IUI uI)
         {
-            _gameController= gameController;
-            _uI= uI;
+            _gameController = gameController;
+            _uI = uI;
         }
-        
 
         public void ChooseGameFromList(List<Game> gameList)
         {
-
             while (true)
             {
                 _uI.PrintString("Please choose a game by typing the exact name of it");
-
                 DisplayGameOptions(gameList, _uI);
-
                 var input = _uI.GetString();
-
                 var chosenGame = gameList.FirstOrDefault(game => game.GameTitle == input);
 
                 if (chosenGame == null)

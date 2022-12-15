@@ -23,7 +23,6 @@ namespace GamePlatform.Test.UIs
             _consoleIO!.Exit();
 
             var expected = true;
-
             var actual = _terminator!.TerminateProgramRan;
 
             Assert.AreEqual(expected, actual);
@@ -35,7 +34,6 @@ namespace GamePlatform.Test.UIs
             _iO!.UserInput = "Hej";
 
             var expected = "Hej";
-
             var actual = _consoleIO!.GetString();
 
             Assert.AreEqual(expected, actual);

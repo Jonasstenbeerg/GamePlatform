@@ -8,6 +8,7 @@ namespace GamePlatform.Data
         private string _filePath;
         private const string _separator = "#&#";
         private IFilemanager _fileManager;
+
         public DataAccess(string filePath, IFilemanager filemanager)
         {
             _filePath = filePath;
@@ -22,7 +23,7 @@ namespace GamePlatform.Data
                 while (!reader.EndOfStream)
                 {
                     string line = reader.ReadLine()!;
-                    Player player = PlayerExtensions.ParsePlayerDataFromString(line,_separator);
+                    Player player = PlayerExtensions.ParsePlayerDataFromString(line, _separator);
                     players.Add(player);
                 }
             }
@@ -33,7 +34,7 @@ namespace GamePlatform.Data
         {
             using (StreamWriter writer = _fileManager.StreamWriter(_filePath))
             {
-                writer.WriteLine(player.Name + _separator + player.TotalGuesses + _separator + player.CurrentGameTitle );
+                writer.WriteLine(player.Name + _separator + player.TotalGuesses + _separator + player.CurrentGameTitle);
             };
         }
     }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GamePlatform.Models
+﻿namespace GamePlatform.Models
 {
     public class GuessResult
     {
@@ -20,7 +14,7 @@ namespace GamePlatform.Models
         {
             return $"{GetGivenCharMultiplied('B', BullsCounter)},{GetGivenCharMultiplied('C', CowCounter)}";
         }
-        
+
         private static string GetGivenCharMultiplied(char givenChar, int times)
         {
             return new string(givenChar, times);

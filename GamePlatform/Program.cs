@@ -11,9 +11,9 @@ List<Game> gameList = new()
     new Game(new MastermindType(), "Mastermind")
 };
 
-ITerminator terminator = new Terminator();      //För tester
-IIO iO = new IO();                              //För tester
-IFilemanager filemanager = new Filemanager();   //För tester
+ITerminator terminator = new Terminator();      //For unit testing
+IIO iO = new IO();                              //For unit testing
+IFilemanager filemanager = new Filemanager();   //For unit testing
 
 IUI uI = new ConsoleUI(terminator, iO);
 IDataAccess dataAccess = new DataAccess("scoreboard.txt", filemanager);

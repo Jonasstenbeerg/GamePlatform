@@ -1,7 +1,6 @@
 ﻿using GamePlatform.Interfaces;
 using GamePlatform.Models;
 using GamePlatform.Tools;
-using System.Globalization;
 
 namespace GamePlatform.Controllers
 {
@@ -61,7 +60,6 @@ namespace GamePlatform.Controllers
         private void MakeGuess()
         {
             string guess = _ui.GetString();
-
             HandleGuess(guess);
         }
 
@@ -100,7 +98,7 @@ namespace GamePlatform.Controllers
 
             foreach (var player in distinctPlayers.OrderBy(player => player.AverageGuesses))
             {
-                int gameTitleSpacing = 5 + player.CurrentGameTitle.Length;
+                int gameTitleSpacing = 5 + player.CurrentGameTitle!.Length;
 
                 _ui.PrintString(string.Format($"{{0,-9}}{{1,-1:D}}{{2,11:F2}}{{3,{gameTitleSpacing}}}",
                    player.Name,
