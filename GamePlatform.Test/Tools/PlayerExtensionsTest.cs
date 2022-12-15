@@ -14,7 +14,7 @@ namespace GamePlatform.Test.Controllers
                 new Player() { Name = "Jonas", NumberOfGames = 7, TotalGuesses = 2, CurrentGameTitle = "Mastermind"},
                 new Player() { Name = "Madde", NumberOfGames = 4, TotalGuesses = 4, CurrentGameTitle = "Moo" }
             };
-            
+
             var result = players.GetDistinctPlayersForEachGame();
             int actual = result.Count();
             int expected = 2;

@@ -8,14 +8,13 @@ namespace GamePlatform.Test.Datatest
     [TestClass]
     public class DataAccessTest
     {
-
         DataAccess? _dataAccess;
 
         [TestMethod]
         public void GetAllPlayers_Should_return_A_List_Containing_Players_Matching_TextFile_Lines()
         {
             Mock<IFilemanager> filemangaerMock = new Mock<IFilemanager>();
-            string testContent = "sven#&#4\nJohannes#&#1";
+            string testContent = "sven#&#4#&#moo\nJohannes#&#1#&#mastermind";
             byte[] testBytes = Encoding.UTF8.GetBytes(testContent);
 
             using (MemoryStream testMemoryStream = new MemoryStream(testBytes))
@@ -25,17 +24,14 @@ namespace GamePlatform.Test.Datatest
                 .Returns(() => testStreamReader);
                 _dataAccess = new DataAccess("test.txt", filemangaerMock.Object);
 
-
                 var actual = _dataAccess.GetAllPlayers();
                 var expected = new List<Player>() { new Player { Name = "sven", TotalGuesses = 4 }, new Player { Name = "Johannes", TotalGuesses = 1 } };
-
 
                 Assert.IsInstanceOfType(actual, typeof(List<Player>));
                 Assert.AreEqual(expected[0].Name, actual[0].Name);
                 Assert.AreEqual(expected[0].TotalGuesses, actual[0].TotalGuesses);
                 Assert.AreEqual(expected[1].Name, actual[1].Name);
                 Assert.AreEqual(expected[1].TotalGuesses, actual[1].TotalGuesses);
-
             }
         }
 
@@ -51,18 +47,14 @@ namespace GamePlatform.Test.Datatest
                     .Returns(() => writer);
                 _dataAccess = new DataAccess("Test.txt", mockFilemanager.Object);
 
-                var player = new Player { Name = "sven", TotalGuesses = 2 };
+                var player = new Player { Name = "sven", TotalGuesses = 2, CurrentGameTitle = "moo" };
 
                 // act
-
-
                 _dataAccess.SavePlayer(player);
                 string actual = Encoding.UTF8.GetString(stream.ToArray());
-                string expected = "sven#&#2\r\n";
-
+                string expected = "sven#&#2#&#moo\r\n";
 
                 // assert
-
                 Assert.AreEqual(expected, actual);
             }
         }

@@ -67,10 +67,9 @@ namespace GamePlatform.TemplateClasses
                     }
                 }
             }
-            GuessResult result = _gameType.ConfigureFormatGuessResult(new GuessResult(cows,bulls));
+            GuessResult result = _gameType.ConfigureFormatGuessResult(new GuessResult(cows, bulls));
 
             return result;
         }
-
     }
 }

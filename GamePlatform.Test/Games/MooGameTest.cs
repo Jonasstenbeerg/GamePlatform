@@ -120,6 +120,7 @@ namespace GamePlatform.Test.Games
             Assert.AreEqual(expected, actual);
 
         }
+
         [TestMethod]
         public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_Only_Be_Digits()
         {
@@ -134,6 +135,7 @@ namespace GamePlatform.Test.Games
             }
 
         }
+
         [TestMethod]
         public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_Unique_Characters()
         {
@@ -148,9 +150,6 @@ namespace GamePlatform.Test.Games
                 else
                     array[(int)number] = true;
             }
-
-
         }
-
     }
 }
