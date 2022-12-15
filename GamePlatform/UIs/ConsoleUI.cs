@@ -16,6 +16,11 @@ public class ConsoleUI : IUI
         _terminator.TerminateProgram();
     }
 
+    public void Clear()
+    {
+        Console.Clear();
+    }
+
     public string GetString()
     {
         string? input;

@@ -5,7 +5,7 @@ using GamePlatform.Interfaces;
 using GamePlatform.TemplateClasses;
 using GamePlatform.Tools;
 
-List<Game> gameList = new()
+List<Game> games = new()
 {
     new Game(new MooType(), "Moo"),
     new Game(new MastermindType(), "Mastermind")
@@ -20,4 +20,4 @@ IDataAccess dataAccess = new DataAccess("scoreboard.txt", filemanager);
 IGameController gameController = new GameController(uI, dataAccess);
 
 LauncherController launcher = new(gameController, uI);
-launcher.ChooseGameFromList(gameList);
+launcher.ChooseGameFromList(games);
