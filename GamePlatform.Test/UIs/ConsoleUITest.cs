@@ -8,6 +8,7 @@ namespace GamePlatform.Test.UIs
         private ConsoleUI? _consoleIO;
         private FakeTerminator? _terminator;
         private FakeIO? _iO;
+
         [TestInitialize]
         public void Init()
         {

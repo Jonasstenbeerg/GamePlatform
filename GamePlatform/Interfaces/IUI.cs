@@ -5,5 +5,6 @@
         public string GetString();
         public void PrintString(string input);
         void Exit();
+        void Clear();
     }
 }
