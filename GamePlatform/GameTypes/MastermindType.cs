@@ -14,7 +14,7 @@ namespace GamePlatform.GameTypes
             if (result.CowCounter + result.BullsCounter > MaxBullsAndCows)
             {
                 int cowsToRemove = (result.CowCounter + result.BullsCounter) - MaxBullsAndCows;
-                result = new GuessResult(result.CowCounter-cowsToRemove,result.BullsCounter);
+                result = new GuessResult(result.CowCounter - cowsToRemove, result.BullsCounter);
             }
 
             return result;

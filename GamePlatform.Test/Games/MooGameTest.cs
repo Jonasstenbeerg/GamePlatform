@@ -1,10 +1,7 @@
 ﻿using GamePlatform.GameTypes;
-using GamePlatform.Interfaces;
 using GamePlatform.Models;
 using GamePlatform.TemplateClasses;
 using GamePlatform.Test.Fakes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 
 namespace GamePlatform.Test.Games
 {
@@ -20,11 +17,9 @@ namespace GamePlatform.Test.Games
             _game!.SetPlayerName(NameToSet);
 
             var expected = NameToSet;
-
             var actual = _game.PlayerName;
 
             Assert.AreEqual(expected, actual);
-
         }
 
         [TestMethod]
@@ -38,6 +33,7 @@ namespace GamePlatform.Test.Games
                 Assert.Fail("Player name set to no character value");
             }
         }
+
         [TestMethod]
         public void SetCurrentGuess_Should_Change_CurrentGuess_Equal_To_Input()
         {
@@ -45,11 +41,9 @@ namespace GamePlatform.Test.Games
             _game!.SetCurrentGuess(GuessToMake);
 
             var expected = GuessToMake;
-
             var actual = _game.CurrentGuess;
 
             Assert.AreEqual(expected, actual);
-
         }
 
         [TestMethod]
@@ -113,7 +107,6 @@ namespace GamePlatform.Test.Games
             _game!.SetDigitsToGuess();
 
             Assert.IsInstanceOfType(_game.DigitsToGuess, typeof(string));
-
         }
 
         [TestMethod]
@@ -127,6 +120,7 @@ namespace GamePlatform.Test.Games
             Assert.AreEqual(expected, actual);
 
         }
+
         [TestMethod]
         public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_Only_Be_Digits()
         {
@@ -139,8 +133,8 @@ namespace GamePlatform.Test.Games
                     Assert.Fail("Letter found in string that should contain only digits");
                 }
             }
-
         }
+
         [TestMethod]
         public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_Unique_Characters()
         {
@@ -155,9 +149,6 @@ namespace GamePlatform.Test.Games
                 else
                     array[(int)number] = true;
             }
-
-
         }
-
     }
 }

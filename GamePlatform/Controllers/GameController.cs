@@ -1,7 +1,6 @@
 ﻿using GamePlatform.Interfaces;
 using GamePlatform.Models;
 using GamePlatform.Tools;
-using System.Globalization;
 
 namespace GamePlatform.Controllers
 {
@@ -11,6 +10,7 @@ namespace GamePlatform.Controllers
         private IDigitGuessGame? _currentGame;
         private readonly IDataAccess _dataAccess;
         private bool _continueGame;
+
         public GameController(IUI ui, IDataAccess dataAccess)
         {
             _ui = ui;
@@ -61,7 +61,6 @@ namespace GamePlatform.Controllers
         private void MakeGuess()
         {
             string guess = _ui.GetString();
-
             HandleGuess(guess);
         }
 

@@ -15,7 +15,6 @@
 
         public string GetFourRandomNumbers()
         {
-
             string randomDigits = "";
             for (int i = 0; i < 4; i++)
             {
@@ -36,7 +35,5 @@
 
             return randomNumbers.ToString();
         }
-
-
     }
 }
