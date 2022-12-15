@@ -6,7 +6,7 @@ namespace GamePlatform.GameTypes
 {
     internal class MastermindType : IGameType
     {
-        private NumberGenerator _numberGenerator = new(7, false);
+        private readonly NumberGenerator _numberGenerator = new(7, false);
 
         public GuessResult ConfigureFormatGuessResult(GuessResult result)
         {

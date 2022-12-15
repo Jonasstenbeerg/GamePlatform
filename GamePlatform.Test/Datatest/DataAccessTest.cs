@@ -1,5 +1,6 @@
 ﻿using GamePlatform.Data;
 using GamePlatform.Interfaces;
+using GamePlatform.Models;
 using Moq;
 using System.Text;
 
@@ -13,14 +14,14 @@ namespace GamePlatform.Test.Datatest
         [TestMethod]
         public void GetAllPlayers_Should_return_A_List_Containing_Players_Matching_TextFile_Lines()
         {
-            Mock<IFilemanager> filemangaerMock = new Mock<IFilemanager>();
+            Mock<IFileManager> filemangaerMock = new Mock<IFileManager>();
             string testContent = "sven#&#4#&#moo\nJohannes#&#1#&#mastermind";
             byte[] testBytes = Encoding.UTF8.GetBytes(testContent);
 
             using (MemoryStream testMemoryStream = new MemoryStream(testBytes))
             using (StreamReader testStreamReader = new StreamReader(testMemoryStream))
             {
-                filemangaerMock.Setup(m => m.StreamReader(It.IsAny<string>()))
+                filemangaerMock.Setup(m => m.GetStreamReader(It.IsAny<string>()))
                 .Returns(() => testStreamReader);
                 _dataAccess = new DataAccess("test.txt", filemangaerMock.Object);
 
@@ -42,8 +43,8 @@ namespace GamePlatform.Test.Datatest
             using (var writer = new StreamWriter(stream))
             {
                 // arrange
-                var mockFilemanager = new Mock<IFilemanager>();
-                mockFilemanager.Setup(m => m.StreamWriter(It.IsAny<string>()))
+                var mockFilemanager = new Mock<IFileManager>();
+                mockFilemanager.Setup(m => m.GetStreamWriter(It.IsAny<string>()))
                     .Returns(() => writer);
                 _dataAccess = new DataAccess("Test.txt", mockFilemanager.Object);
 

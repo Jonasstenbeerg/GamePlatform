@@ -1,4 +1,6 @@
-﻿namespace GamePlatform.Tools
+﻿using GamePlatform.Models;
+
+namespace GamePlatform.Tools
 {
     public static class PlayerExtensions
     {

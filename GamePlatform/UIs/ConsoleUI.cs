@@ -21,16 +21,9 @@ public class ConsoleUI : IUI
         Console.Clear();
     }
 
-    public string GetString()
+    public string? GetString()
     {
-        string? input;
-
-        do
-        {
-            input = _iO.ReturnUserInput();
-
-        } while (string.IsNullOrEmpty(input));
-        return input!;
+        return _iO.ReturnUserInput();
     }
 
     public void PrintString(string input)
