@@ -2,14 +2,14 @@
 
 namespace GamePlatform.Test.Fakes
 {
-    internal class FakeIO : IIO
+    public class FakeIO : IIO
     {
         public string? UserInput { get; set; }
-        public bool HandleUserInputRan { get; private set; }
+        public bool HandleUserInputHasRun { get; private set; }
 
         public void HandleUserInput(string input)
         {
-            HandleUserInputRan = (input != null);
+            HandleUserInputHasRun = true;
         }
 
         public string? ReturnUserInput()

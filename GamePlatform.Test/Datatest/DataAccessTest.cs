@@ -12,21 +12,25 @@ namespace GamePlatform.Test.Datatest
         DataAccess? _dataAccess;
 
         [TestMethod]
-        public void GetAllPlayers_Should_return_A_List_Containing_Players_Matching_TextFile_Lines()
+        public void GetAllPlayers_Should_Return_A_List_Containing_Players_Matching_Text_File_Lines()
         {
-            Mock<IFileManager> filemangaerMock = new Mock<IFileManager>();
-            string testContent = "sven#&#4#&#moo\nJohannes#&#1#&#mastermind";
-            byte[] testBytes = Encoding.UTF8.GetBytes(testContent);
+            Mock<IFileManager> fileManagerMock = new();
+            string testPlayerData = "Sven#&#4#&#Moo\nJohannes#&#1#&#Mastermind";
+            byte[] testBytes = Encoding.UTF8.GetBytes(testPlayerData);
 
-            using (MemoryStream testMemoryStream = new MemoryStream(testBytes))
-            using (StreamReader testStreamReader = new StreamReader(testMemoryStream))
+            using (MemoryStream testMemoryStream = new(testBytes))
+            using (StreamReader testStreamReader = new(testMemoryStream))
             {
-                filemangaerMock.Setup(m => m.GetStreamReader(It.IsAny<string>()))
+                fileManagerMock.Setup(mock => mock.GetStreamReader(It.IsAny<string>()))
                 .Returns(() => testStreamReader);
-                _dataAccess = new DataAccess("test.txt", filemangaerMock.Object);
+                _dataAccess = new DataAccess("test.txt", fileManagerMock.Object);
 
                 var actual = _dataAccess.GetAllPlayers();
-                var expected = new List<Player>() { new Player { Name = "sven", TotalGuesses = 4 }, new Player { Name = "Johannes", TotalGuesses = 1 } };
+                var expected = new List<Player>()
+                {
+                    new Player { Name = "Sven", TotalGuesses = 4 },
+                    new Player { Name = "Johannes", TotalGuesses = 1 }
+                };
 
                 Assert.IsInstanceOfType(actual, typeof(List<Player>));
                 Assert.AreEqual(expected[0].Name, actual[0].Name);
@@ -39,23 +43,25 @@ namespace GamePlatform.Test.Datatest
         [TestMethod]
         public void SavePlayer_Should_Add_Specific_Player_To_File()
         {
-            using (var stream = new MemoryStream())
-            using (var writer = new StreamWriter(stream))
+            using (MemoryStream testMemoryStream = new())
+            using (StreamWriter testStreamWriter = new(testMemoryStream))
             {
-                // arrange
-                var mockFilemanager = new Mock<IFileManager>();
-                mockFilemanager.Setup(m => m.GetStreamWriter(It.IsAny<string>()))
-                    .Returns(() => writer);
-                _dataAccess = new DataAccess("Test.txt", mockFilemanager.Object);
+                Mock<IFileManager> fileManagerMock = new();
+                fileManagerMock.Setup(mock => mock.GetStreamWriter(It.IsAny<string>()))
+                    .Returns(() => testStreamWriter);
+                _dataAccess = new DataAccess("test.txt", fileManagerMock.Object);
 
-                var player = new Player { Name = "sven", TotalGuesses = 2, CurrentGameTitle = "moo" };
+                Player player = new()
+                {
+                    Name = "Sven",
+                    TotalGuesses = 2,
+                    CurrentGameTitle = "Moo"
+                };
 
-                // act
                 _dataAccess.SavePlayer(player);
-                string actual = Encoding.UTF8.GetString(stream.ToArray());
-                string expected = "sven#&#2#&#moo\r\n";
+                string actual = Encoding.UTF8.GetString(testMemoryStream.ToArray());
+                string expected = "Sven#&#2#&#Moo\r\n";
 
-                // assert
                 Assert.AreEqual(expected, actual);
             }
         }

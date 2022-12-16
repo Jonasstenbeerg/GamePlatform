@@ -8,12 +8,12 @@ namespace GamePlatform.Test.Games
     [TestClass]
     public class MooGameTest
     {
-        private static Game _game = new Game(new MooType(), "Moo");
+        private readonly Game _game = new(new MooType(), "Moo");
 
         [TestMethod]
-        public void SetPlayerName_Should_Change_PlayerName_Equal_To_Input()
+        public void SetPlayerName_Should_Set_PlayerName_Equal_To_Input()
         {
-            const string NameToSet = "svante";
+            const string NameToSet = "Svante";
             _game!.SetPlayerName(NameToSet);
 
             var expected = NameToSet;
@@ -35,7 +35,7 @@ namespace GamePlatform.Test.Games
         }
 
         [TestMethod]
-        public void SetCurrentGuess_Should_Change_CurrentGuess_Equal_To_Input()
+        public void SetCurrentGuess_Should_Set_CurrentGuess_Equal_To_Input()
         {
             const string GuessToMake = "1234";
             _game!.SetCurrentGuess(GuessToMake);
@@ -54,12 +54,12 @@ namespace GamePlatform.Test.Games
         public void GetGuessResult_Should_Return_Correct_GuessResult_After_Given_Guess(int bulls, int cows, string guess)
         {
             const string digitsToGuess = "3456";
-            Game testGame = new Game(new FakeMooType(digitsToGuess), "MooTest");
+            Game testGame = new(new FakeMooType(digitsToGuess), "MooTest");
             testGame.SetDigitsToGuess();
             testGame.SetCurrentGuess(guess);
 
             GuessResult actual = testGame.GetGuessResult();
-            GuessResult expected = new GuessResult(cows, bulls);
+            GuessResult expected = new(cows, bulls);
 
             Assert.AreEqual(actual.CowCounter, expected.CowCounter);
             Assert.AreEqual(actual.BullsCounter, expected.BullsCounter);
@@ -73,7 +73,7 @@ namespace GamePlatform.Test.Games
         [DataRow(1, 1, "B,C")]
         public void GuessResult_To_String_Should_Return_Correct_String(int bulls, int cows, string expected)
         {
-            GuessResult result = new GuessResult(cows, bulls);
+            GuessResult result = new(bulls, cows);
             string actual = result.ToString();
 
             Assert.AreEqual(expected, actual);
@@ -101,14 +101,8 @@ namespace GamePlatform.Test.Games
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
-        public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_A_String()
-        {
-            _game!.SetDigitsToGuess();
 
-            Assert.IsInstanceOfType(_game.DigitsToGuess, typeof(string));
-        }
-
+        /* Flytta till NumberGeneratorTesT?----------------------------------------------*/
         [TestMethod]
         public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_Be_Four_In_Length()
         {
@@ -118,7 +112,6 @@ namespace GamePlatform.Test.Games
             var actual = _game.DigitsToGuess!.Length;
 
             Assert.AreEqual(expected, actual);
-
         }
 
         [TestMethod]
@@ -126,9 +119,9 @@ namespace GamePlatform.Test.Games
         {
             _game!.SetDigitsToGuess();
 
-            foreach (var number in _game.DigitsToGuess!)
+            foreach (var digit in _game.DigitsToGuess!)
             {
-                if (Char.IsLetter(number))
+                if (Char.IsLetter(digit))
                 {
                     Assert.Fail("Letter found in string that should contain only digits");
                 }
@@ -140,14 +133,15 @@ namespace GamePlatform.Test.Games
         {
             _game!.SetDigitsToGuess();
 
-            bool[] array = new bool[100];
+            // int value of char 9 = 57, therefore the array length is 58
+            bool[] array = new bool[58];
 
-            foreach (char number in _game.DigitsToGuess!)
+            foreach (char digit in _game.DigitsToGuess!)
             {
-                if (array[(int)number])
+                if (array[digit])
                     Assert.Fail("Not Unique");
                 else
-                    array[(int)number] = true;
+                    array[digit] = true;
             }
         }
     }

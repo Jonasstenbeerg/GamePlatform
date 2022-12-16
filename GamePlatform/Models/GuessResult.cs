@@ -2,13 +2,13 @@
 {
     public class GuessResult
     {
-        public int CowCounter { get; private set; }
         public int BullsCounter { get; private set; }
+        public int CowCounter { get; private set; }
 
-        public GuessResult(int cowCounter, int bullsCounter)
+        public GuessResult(int bullsCounter, int cowCounter)
         {
-            CowCounter = cowCounter;
             BullsCounter = bullsCounter;
+            CowCounter = cowCounter;
         }
 
         public override string ToString()

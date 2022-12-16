@@ -5,16 +5,15 @@ namespace GamePlatform.Test.UIs
     [TestClass]
     public class ConsoleUITest
     {
-        private ConsoleUI? _consoleIO;
         private FakeTerminator? _terminator;
         private FakeIO? _iO;
+        private ConsoleUI? _consoleIO;
 
         [TestInitialize]
-        public void Init()
+        public void Initialize()
         {
             _terminator = new FakeTerminator();
             _iO = new FakeIO();
-
             _consoleIO = new ConsoleUI(_terminator, _iO);
         }
 
@@ -24,7 +23,7 @@ namespace GamePlatform.Test.UIs
             _consoleIO!.Exit();
 
             var expected = true;
-            var actual = _terminator!.TerminateProgramRan;
+            var actual = _terminator!.TerminateProgramHasRun;
 
             Assert.AreEqual(expected, actual);
         }
@@ -41,13 +40,14 @@ namespace GamePlatform.Test.UIs
         }
 
         [TestMethod]
-        public void PrintString_Should_Run_HandleUserInput_With_Input_In_IO()
+        [DataRow("Hej")]
+        [DataRow("")]
+        [DataRow(null)]
+        public void PrintString_Should_Run_HandleUserInput_On_Any_String_Input(string? input)
         {
-            const string input = "Hej";
-
             _consoleIO!.PrintString(input);
 
-            Assert.IsTrue(_iO!.HandleUserInputRan);
+            Assert.IsTrue(_iO!.HandleUserInputHasRun);
         }
     }
 }

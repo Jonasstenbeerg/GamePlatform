@@ -6,7 +6,7 @@ namespace GamePlatform.TemplateClasses
     public class Game : IDigitGuessGame
     {
         public int GuessCounter { get; private set; }
-        public string Title { get; private set; }
+        public string? Title { get; private set; }
         public string? PlayerName { get; private set; }
         public string? CurrentGuess { get; private set; }
         public string? DigitsToGuess { get; private set; }
@@ -66,7 +66,7 @@ namespace GamePlatform.TemplateClasses
                     }
                 }
             }
-            GuessResult result = _gameType.FormatGuessResult(new GuessResult(cows, bulls));
+            GuessResult result = _gameType.FormatGuessResult(new GuessResult(bulls, cows));
 
             return result;
         }

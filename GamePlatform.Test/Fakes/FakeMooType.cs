@@ -3,7 +3,7 @@ using GamePlatform.Models;
 
 namespace GamePlatform.Test.Fakes
 {
-    internal class FakeMooType : IGameType
+    public class FakeMooType : IGameType
     {
         private readonly string _digitsToGuess;
 

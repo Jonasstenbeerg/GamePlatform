@@ -2,10 +2,10 @@
 
 namespace GamePlatform.Test.Tools
 {
-    [TestClass()]
+    [TestClass]
     public class NumberGeneratorTest
     {
-        [TestMethod()]
+        [TestMethod]
         public void GetFourRandomNumbers_Should_Return_Four_Numbers()
         {
             NumberGenerator numberGenerator = new(9, true);

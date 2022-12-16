@@ -3,11 +3,11 @@ using GamePlatform.Tools;
 
 namespace GamePlatform.Test.Controllers
 {
-    [TestClass()]
+    [TestClass]
     public class PlayerExtensionsTest
     {
-        [TestMethod()]
-        public void GetDistinctPlayers_Should_Return_List_Of_Distinct_Players()
+        [TestMethod]
+        public void GetDistinctPlayers_Should_Return_List_Of_Distinct_Players_For_Each_Game()
         {
             List<Player> players = new()
             {
@@ -16,42 +16,45 @@ namespace GamePlatform.Test.Controllers
                 new Player() { Name = "Madde", NumberOfGames = 4, TotalGuesses = 4, CurrentGameTitle = "Moo" }
             };
 
-            var result = players.GetDistinctPlayersForEachGame();
-            int actual = result.Count();
             int expected = 2;
+            var result = players.GetDistinctPlayersForEachGame();
+            int actual = result.Count;
 
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        [DataRow("Svante#&#5#&#Moo")]
-        public void ParsePlayerDataFromString_Should_Return_Name_From_Parsed_String(string playerData)
+        public void ParsePlayerDataFromString_Should_Return_Name_From_Parsed_String()
         {
+            string playerData = "Svante#&#5#&#Moo";
+
             Player player = PlayerExtensions.ParsePlayerDataFromString(playerData, "#&#");
-            string expected = player.Name!;
-            string actual = "Svante";
+            string expected = "Svante";
+            string actual = player.Name!;
 
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        [DataRow("Svante#&#5#&#Moo")]
-        public void ParsePlayerDataFromString_Should_Return_Number_Of_Guesses_From_Parsed_String(string playerData)
+        public void ParsePlayerDataFromString_Should_Return_Number_Of_Guesses_From_Parsed_String()
         {
+            string playerData = "Svante#&#5#&#Moo";
+
             Player player = PlayerExtensions.ParsePlayerDataFromString(playerData, "#&#");
-            int expected = player.TotalGuesses;
-            int actual = 5;
+            int expected = 5;
+            int actual = player.TotalGuesses;
 
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        [DataRow("Svante#&#5#&#Moo")]
-        public void ParsePlayerDataFromString_Should_Return_Game_Title_From_Parsed_String(string playerData)
+        public void ParsePlayerDataFromString_Should_Return_Game_Title_From_Parsed_String()
         {
+            string playerData = "Svante#&#5#&#Moo";
+
             Player player = PlayerExtensions.ParsePlayerDataFromString(playerData, "#&#");
-            string expected = player.CurrentGameTitle;
-            string actual = "Moo";
+            string expected = "Moo";
+            string actual = player.CurrentGameTitle!;
 
             Assert.AreEqual(expected, actual);
         }
