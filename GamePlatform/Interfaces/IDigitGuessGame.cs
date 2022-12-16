@@ -12,5 +12,5 @@ public interface IDigitGuessGame
     public void SetDigitsToGuess();
     public void IncrementGuessCounter();
     public void ResetGuessCounter();
-    public GuessResult GetGuessResult();
+    public GuessResultData GetGuessResult();
 }

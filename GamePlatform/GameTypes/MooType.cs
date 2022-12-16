@@ -13,7 +13,7 @@ namespace GamePlatform.GameTypes
             _numberGenerator = numberGenerator;
         }
     
-        public GuessResult FormatGuessResult(GuessResult result)
+        public GuessResultData FormatGuessResult(GuessResultData result)
         {
             return result;
         }

@@ -12,14 +12,14 @@ namespace GamePlatform.GameTypes
             _numberGenerator = numberGenerator;
         }
     
-        public GuessResult FormatGuessResult(GuessResult result)
+        public GuessResultData FormatGuessResult(GuessResultData result)
         {
             const int MaxBullsAndCows = 4;
 
             if (result.CowCounter + result.BullsCounter > MaxBullsAndCows)
             {
                 int cowsToRemove = (result.CowCounter + result.BullsCounter) - MaxBullsAndCows;
-                result = new GuessResult(result.CowCounter - cowsToRemove, result.BullsCounter);
+                result = new GuessResultData(result.CowCounter - cowsToRemove, result.BullsCounter);
             }
 
             return result;
