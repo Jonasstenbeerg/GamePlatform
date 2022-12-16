@@ -15,25 +15,28 @@
 
         public string GetFourRandomNumbers()
         {
-            string randomDigits = "";
+            string randomNumbers = "";
+
             for (int i = 0; i < 4; i++)
             {
-                randomDigits += _isUnique ?
-                    GenerateUniqueNumbers(randomDigits) :
+                randomNumbers += _isUnique ?
+                    GenerateUniqueNumbers(randomNumbers) :
                     _random!.Next(_numberSpan);
             }
-            return randomDigits;
+
+            return randomNumbers;
         }
 
         private string GenerateUniqueNumbers(string currentNumbers)
         {
-            int randomNumbers;
+            string numbers;
+
             do
             {
-                randomNumbers = _random!.Next(_numberSpan);
-            } while (currentNumbers.Contains(randomNumbers.ToString()));
+                numbers = _random!.Next(_numberSpan).ToString();
+            } while (currentNumbers.Contains(numbers));
 
-            return randomNumbers.ToString();
+            return numbers;
         }
     }
 }
