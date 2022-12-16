@@ -56,7 +56,7 @@ namespace GamePlatform.Controllers
 
         private void ShowGuessResult()
         {
-            GuessResult result = _currentGame!.GetGuessResult();
+            GuessResultData result = _currentGame!.GetGuessResult();
             _ui.PrintString($"{result}\n");
         }
 

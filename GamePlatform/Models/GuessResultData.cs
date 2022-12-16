@@ -1,11 +1,11 @@
 ﻿namespace GamePlatform.Models
 {
-    public class GuessResult
+    public class GuessResultData
     {
         public int BullsCounter { get; private set; }
         public int CowCounter { get; private set; }
 
-        public GuessResult(int bullsCounter, int cowCounter)
+        public GuessResultData(int bullsCounter, int cowCounter)
         {
             BullsCounter = bullsCounter;
             CowCounter = cowCounter;

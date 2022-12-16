@@ -59,8 +59,8 @@ namespace GamePlatform.Test.Games
             testGame.SetDigitsToGuess();
             testGame.SetCurrentGuess(guess);
 
-            GuessResult actual = testGame.GetGuessResult();
-            GuessResult expected = new(bulls, cows);
+            GuessResultData actual = testGame.GetGuessResult();
+            GuessResultData expected = new(bulls, cows);
 
             Assert.AreEqual(actual.CowCounter, expected.CowCounter);
             Assert.AreEqual(actual.BullsCounter, expected.BullsCounter);
@@ -74,7 +74,7 @@ namespace GamePlatform.Test.Games
         [DataRow(1, 1, "B,C")]
         public void GuessResult_To_String_Should_Return_Correct_String(int bulls, int cows, string expected)
         {
-            GuessResult result = new(bulls, cows);
+            GuessResultData result = new(bulls, cows);
             string actual = result.ToString();
 
             Assert.AreEqual(expected, actual);

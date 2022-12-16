@@ -44,7 +44,7 @@ namespace GamePlatform.TemplateClasses
             GuessCounter = 0;
         }
 
-        public GuessResult GetGuessResult()
+        public GuessResultData GetGuessResult()
         {
             int cows = 0;
             int bulls = 0;
@@ -66,7 +66,7 @@ namespace GamePlatform.TemplateClasses
                     }
                 }
             }
-            GuessResult result = _gameType.FormatGuessResult(new GuessResult(bulls, cows));
+            GuessResultData result = _gameType.FormatGuessResult(new GuessResultData(bulls, cows));
 
             return result;
         }
