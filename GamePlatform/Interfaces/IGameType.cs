@@ -5,6 +5,6 @@ namespace GamePlatform.Interfaces
     public interface IGameType
     {
         public string ConfigureSetDigitsToGuess();
-        public GuessResult FormatGuessResult(GuessResult result);
+         public GuessResultData FormatGuessResult(GuessResultData result);
     }
 }
