@@ -8,9 +8,10 @@ namespace GamePlatform.GameTypes
     {
         private readonly NumberGenerator _numberGenerator = new(7, false);
 
-        public GuessResult ConfigureFormatGuessResult(GuessResult result)
+        public GuessResult FormatGuessResult(GuessResult result)
         {
             const int MaxBullsAndCows = 4;
+
             if (result.CowCounter + result.BullsCounter > MaxBullsAndCows)
             {
                 int cowsToRemove = (result.CowCounter + result.BullsCounter) - MaxBullsAndCows;

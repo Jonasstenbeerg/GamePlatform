@@ -25,12 +25,13 @@ namespace GamePlatform.Tools
         {
             string[] playerStats = line.Split(separator);
 
-            Player player = new Player()
+            Player player = new()
             {
                 Name = playerStats[0],
                 TotalGuesses = int.Parse(playerStats[1]),
                 CurrentGameTitle = playerStats[2]
             };
+
             return player;
         }
     }

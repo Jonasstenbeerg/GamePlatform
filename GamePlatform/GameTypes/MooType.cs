@@ -6,9 +6,9 @@ namespace GamePlatform.GameTypes
 {
     internal class MooType : IGameType
     {
-        private NumberGenerator _numberGenerator = new(10, true);
+        private readonly NumberGenerator _numberGenerator = new(10, true);
 
-        public GuessResult ConfigureFormatGuessResult(GuessResult result)
+        public GuessResult FormatGuessResult(GuessResult result)
         {
             return result;
         }

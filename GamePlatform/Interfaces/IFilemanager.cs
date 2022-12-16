@@ -2,7 +2,7 @@
 {
     public interface IFileManager
     {
-        StreamReader GetStreamReader(string path);
-        StreamWriter GetStreamWriter(string path);
+        StreamReader GetStreamReader(string filePath);
+        StreamWriter GetStreamWriter(string filePath);
     }
 }

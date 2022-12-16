@@ -12,7 +12,7 @@ namespace GamePlatform.Test.Fakes
             _digitsToGuess = digitsToGuess;
         }
 
-        public GuessResult ConfigureFormatGuessResult(GuessResult result)
+        public GuessResult FormatGuessResult(GuessResult result)
         {
             return result;
         }
