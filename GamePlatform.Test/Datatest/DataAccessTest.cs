@@ -26,13 +26,13 @@ namespace GamePlatform.Test.Datatest
                 _dataAccess = new DataAccess("test.txt", fileManagerMock.Object);
 
                 var actual = _dataAccess.GetAllPlayers();
-                var expected = new List<Player>()
+                var expected = new List<PlayerData>()
                 {
-                    new Player { Name = "Sven", TotalGuesses = 4 },
-                    new Player { Name = "Johannes", TotalGuesses = 1 }
+                    new PlayerData { Name = "Sven", TotalGuesses = 4 },
+                    new PlayerData { Name = "Johannes", TotalGuesses = 1 }
                 };
 
-                Assert.IsInstanceOfType(actual, typeof(List<Player>));
+                Assert.IsInstanceOfType(actual, typeof(List<PlayerData>));
                 Assert.AreEqual(expected[0].Name, actual[0].Name);
                 Assert.AreEqual(expected[0].TotalGuesses, actual[0].TotalGuesses);
                 Assert.AreEqual(expected[1].Name, actual[1].Name);
@@ -51,7 +51,7 @@ namespace GamePlatform.Test.Datatest
                     .Returns(() => testStreamWriter);
                 _dataAccess = new DataAccess("test.txt", fileManagerMock.Object);
 
-                Player player = new()
+                PlayerData player = new()
                 {
                     Name = "Sven",
                     TotalGuesses = 2,

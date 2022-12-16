@@ -4,12 +4,12 @@ namespace GamePlatform.Tools
 {
     public static class PlayerExtensions
     {
-        internal static List<Player> GetDistinctPlayersForEachGame(this IEnumerable<Player> players)
+        internal static List<PlayerData> GetDistinctPlayersForEachGame(this IEnumerable<PlayerData> players)
         {
-            List<Player> distinctPlayersByGame = players
+            List<PlayerData> distinctPlayersByGame = players
                 .GroupBy(player => new { player.Name, player.CurrentGameTitle })
                 .Select(grp =>
-                    new Player()
+                    new PlayerData()
                     {
                         Name = grp.Key.Name,
                         CurrentGameTitle = grp.Key.CurrentGameTitle,
@@ -21,11 +21,11 @@ namespace GamePlatform.Tools
             return distinctPlayersByGame;
         }
 
-        internal static Player ParsePlayerDataFromString(string line, string separator)
+        internal static PlayerData ParsePlayerDataFromString(string line, string separator)
         {
             string[] playerStats = line.Split(separator);
 
-            Player player = new()
+            PlayerData player = new()
             {
                 Name = playerStats[0],
                 TotalGuesses = int.Parse(playerStats[1]),

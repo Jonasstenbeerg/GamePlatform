@@ -50,7 +50,7 @@ namespace GamePlatform.Controllers
 
         private void ShowAllPlayersScore()
         {
-            List<Player> allPlayerStats = _dataAccess.GetAllPlayers();
+            List<PlayerData> allPlayerStats = _dataAccess.GetAllPlayers();
             GeneratePlayersScore(allPlayerStats);
         }
 
@@ -97,10 +97,10 @@ namespace GamePlatform.Controllers
             return wantsToContinue;
         }
 
-        private void GeneratePlayersScore(List<Player> players)
+        private void GeneratePlayersScore(List<PlayerData> players)
         {
             _ui.PrintString("Player   Rounds  Average  Game");
-            List<Player> distinctPlayersByGame = players.GetDistinctPlayersForEachGame();
+            List<PlayerData> distinctPlayersByGame = players.GetDistinctPlayersForEachGame();
 
             foreach (var player in distinctPlayersByGame.OrderBy(player => player.AverageGuesses))
             {
@@ -117,7 +117,7 @@ namespace GamePlatform.Controllers
 
         private void HandleSave()
         {
-            Player currentPlayer = new()
+            PlayerData currentPlayer = new()
             {
                 Name = _currentGame!.PlayerName,
                 TotalGuesses = _currentGame.GuessCounter,

@@ -10,9 +10,9 @@ namespace GamePlatform.Test.Tools
         {
             NumberGenerator numberGenerator = new(9, true);
 
-            string result = numberGenerator.GetFourRandomNumbers();
-            int actual = result.Length;
+            string result = numberGenerator.GetRandomDigits();
             int expected = 4;
+            int actual = result.Length;
 
             Assert.AreEqual(expected, actual);
         }

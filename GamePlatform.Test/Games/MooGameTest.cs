@@ -2,13 +2,14 @@
 using GamePlatform.Models;
 using GamePlatform.TemplateClasses;
 using GamePlatform.Test.Fakes;
+using GamePlatform.Tools;
 
 namespace GamePlatform.Test.Games
 {
     [TestClass]
     public class MooGameTest
     {
-        private readonly Game _game = new(new MooType(), "Moo");
+        private Game _game = new(new MooType(new NumberGenerator(10, true)), "Moo");
 
         [TestMethod]
         public void SetPlayerName_Should_Set_PlayerName_Equal_To_Input()
@@ -59,7 +60,7 @@ namespace GamePlatform.Test.Games
             testGame.SetCurrentGuess(guess);
 
             GuessResult actual = testGame.GetGuessResult();
-            GuessResult expected = new(cows, bulls);
+            GuessResult expected = new(bulls, cows);
 
             Assert.AreEqual(actual.CowCounter, expected.CowCounter);
             Assert.AreEqual(actual.BullsCounter, expected.BullsCounter);
@@ -101,8 +102,6 @@ namespace GamePlatform.Test.Games
             Assert.AreEqual(expected, actual);
         }
 
-
-        /* Flytta till NumberGeneratorTesT?----------------------------------------------*/
         [TestMethod]
         public void SetupDigitsToGuess_Should_Set_DigitsToGuess_To_Be_Four_In_Length()
         {

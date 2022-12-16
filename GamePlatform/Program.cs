@@ -5,10 +5,13 @@ using GamePlatform.Interfaces;
 using GamePlatform.TemplateClasses;
 using GamePlatform.Tools;
 
+INumberGenerator MooNumberGenerator = new NumberGenerator(10, true);
+INumberGenerator MastermindNumberGenerator = new NumberGenerator(7, false);
+
 List<IDigitGuessGame> games = new()
 {
-    new Game(new MooType(), "Moo"),
-    new Game(new MastermindType(), "Mastermind")
+    new Game(new MooType(MooNumberGenerator), "Moo"),
+    new Game(new MastermindType(MastermindNumberGenerator), "Mastermind")
 };
 
 ITerminator terminator = new Terminator();      //For unit testing

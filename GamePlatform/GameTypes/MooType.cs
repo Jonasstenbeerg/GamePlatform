@@ -6,8 +6,13 @@ namespace GamePlatform.GameTypes
 {
     internal class MooType : IGameType
     {
-        private readonly NumberGenerator _numberGenerator = new(10, true);
+        private readonly INumberGenerator _numberGenerator;
 
+        public MooType(INumberGenerator numberGenerator)
+        {
+            _numberGenerator = numberGenerator;
+        }
+    
         public GuessResult FormatGuessResult(GuessResult result)
         {
             return result;
@@ -15,7 +20,7 @@ namespace GamePlatform.GameTypes
 
         public string ConfigureSetDigitsToGuess()
         {
-            return _numberGenerator.GetFourRandomNumbers();
+            return _numberGenerator.GetRandomDigits();
         }
     }
 }

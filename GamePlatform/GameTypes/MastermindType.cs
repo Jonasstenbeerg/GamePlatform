@@ -1,13 +1,17 @@
 ﻿using GamePlatform.Interfaces;
-using GamePlatform.Tools;
 using GamePlatform.Models;
 
 namespace GamePlatform.GameTypes
 {
     internal class MastermindType : IGameType
     {
-        private readonly NumberGenerator _numberGenerator = new(7, false);
+        private readonly INumberGenerator _numberGenerator;
 
+        public MastermindType(INumberGenerator numberGenerator)
+        {
+            _numberGenerator = numberGenerator;
+        }
+    
         public GuessResult FormatGuessResult(GuessResult result)
         {
             const int MaxBullsAndCows = 4;
@@ -23,7 +27,7 @@ namespace GamePlatform.GameTypes
 
         public string ConfigureSetDigitsToGuess()
         {
-            return _numberGenerator.GetFourRandomNumbers();
+            return _numberGenerator.GetRandomDigits();
         }
     }
 }

@@ -16,22 +16,22 @@ namespace GamePlatform.Data
             _fileManager = fileManager;
         }
 
-        public List<Player> GetAllPlayers()
+        public List<PlayerData> GetAllPlayers()
         {
-            List<Player> players = new();
+            List<PlayerData> players = new();
             using (StreamReader reader = _fileManager.GetStreamReader(_filePath))
             {
                 while (!reader.EndOfStream)
                 {
                     string line = reader.ReadLine()!;
-                    Player player = PlayerExtensions.ParsePlayerDataFromString(line, _separator);
+                    PlayerData player = PlayerExtensions.ParsePlayerDataFromString(line, _separator);
                     players.Add(player);
                 }
             }
             return players;
         }
 
-        public void SavePlayer(Player player)
+        public void SavePlayer(PlayerData player)
         {
             using (StreamWriter writer = _fileManager.GetStreamWriter(_filePath))
             {

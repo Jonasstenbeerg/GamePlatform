@@ -1,42 +1,44 @@
-﻿namespace GamePlatform.Tools
+﻿using GamePlatform.Interfaces;
+
+namespace GamePlatform.Tools
 {
-    public class NumberGenerator
+    public class NumberGenerator : INumberGenerator
     {
         private readonly Random? _random;
-        private readonly int _numberSpan;
-        private readonly bool _isUnique;
+        private readonly int _maxValue;
+        private readonly bool _isUniqueDigits;
 
-        public NumberGenerator(int numberSpan, bool isUnique)
+        public NumberGenerator(int maxValue, bool isUniqueDigits)
         {
             _random = new Random();
-            _numberSpan = numberSpan;
-            _isUnique = isUnique;
+            _maxValue = maxValue;
+            _isUniqueDigits = isUniqueDigits;
         }
 
-        public string GetFourRandomNumbers()
+        public string GetRandomDigits()
         {
-            string randomNumbers = "";
+            string randomDigits = "";
 
             for (int i = 0; i < 4; i++)
             {
-                randomNumbers += _isUnique ?
-                    GenerateUniqueNumbers(randomNumbers) :
-                    _random!.Next(_numberSpan);
+                randomDigits += _isUniqueDigits ?
+                    GenerateUniqueDigits(randomDigits) :
+                    _random!.Next(_maxValue);
             }
 
-            return randomNumbers;
+            return randomDigits;
         }
 
-        private string GenerateUniqueNumbers(string currentNumbers)
+        private string GenerateUniqueDigits(string currentDigits)
         {
-            string numbers;
+            string digits;
 
             do
             {
-                numbers = _random!.Next(_numberSpan).ToString();
-            } while (currentNumbers.Contains(numbers));
+                digits = _random!.Next(_maxValue).ToString();
+            } while (currentDigits.Contains(digits));
 
-            return numbers;
+            return digits;
         }
     }
 }
