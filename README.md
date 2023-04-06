@@ -22,3 +22,7 @@ Unlike Moo Game, Mastermind has just seven possible digit values instead of ten.
 # Leaderboard
 After each game, the average number of guesses for all players is displayed in a leaderboard, sorted by the best average guess.
 The game keeps track of the statistics of all games played in a file from which the leaderboard is calculated and displayed after each game.
+
+# Gameplay
+Comment out or remove next line to play real games!
+_ui.PrintString($"For practice, number is: {_currentGame.DigitsToGuess}\n");
