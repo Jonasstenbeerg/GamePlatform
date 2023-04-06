@@ -25,5 +25,4 @@ The game keeps track of the statistics of all games played in a file from which 
 
 # Gameplay
 Comment out or remove this line from the controller to play real games:
-
 _ui.PrintString($"For practice, number is: {_currentGame.DigitsToGuess}\n");
