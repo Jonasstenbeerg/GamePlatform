@@ -24,5 +24,5 @@ After each game, the average number of guesses for all players is displayed in a
 The game keeps track of the statistics of all games played in a file from which the leaderboard is calculated and displayed after each game.
 
 # Gameplay
-Comment out or remove next line to play real games!
+Comment out or remove this line to play real games:
 _ui.PrintString($"For practice, number is: {_currentGame.DigitsToGuess}\n");
